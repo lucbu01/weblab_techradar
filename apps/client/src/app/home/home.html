@@ -1,0 +1,17 @@
+<div class="home">
+  <h1 class="primary">Technologie-Radar</h1>
+  @if (this.user(); as user) {
+  <p>Willkommen, {{user.name}}!</p>
+  @if (user.appRoles.length > 0) {
+  <button matButton="tonal" routerLink="/viewer">Technologieradar</button>
+  } @if(user.appRoles.includes('CTO') || user.appRoles.includes('TECHLEAD')) {
+  <button matButton="tonal" routerLink="/technologies">
+    Technologien verwalten
+  </button>
+  } @if(user.appRoles.includes('CTO') ) {
+  <button matButton="tonal" routerLink="/users">Benutzer verwalten</button>
+  } } @else {
+  <p>Willkommen beim Technologie-Radar!</p>
+  <button matButton="tonal" (click)="auth.authorize()">Einloggen</button>
+  }
+</div>

@@ -1,2 +1,38 @@
-<techradar-nx-welcome></techradar-nx-welcome>
-<router-outlet></router-outlet>
+<mat-toolbar color="primary" class="mat-bg-primary-container">
+  <span>Technologie-Radar</span>
+  <span class="spacer"></span>
+  @if (user(); as user) { @if (user.appRoles.length > 0) {
+  <button mat-button routerLink="/viewer">Technologieradar</button>
+  } @if(user.appRoles.includes('CTO') || user.appRoles.includes('TECHLEAD')) {
+  <button mat-button routerLink="/technologies">Technologien verwalten</button>
+  } @if(user.appRoles.includes('CTO') ) {
+  <button mat-button routerLink="/users">Benutzer verwalten</button>
+  } }
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="userMenu"
+    aria-label="Open user menu"
+  >
+    <mat-icon class="primary">account_circle</mat-icon>
+  </button>
+  <mat-menu #userMenu="matMenu">
+    @if (user(); as user) {
+    <div class="menu-info-block" role="presentation">
+      <div class="primary">Angemeldet als</div>
+      <div>{{ user?.name }}</div>
+      <div>{{ user?.email }}</div>
+    </div>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logoff()">
+      <mat-icon>logout</mat-icon>Ausloggen
+    </button>
+    } @else {
+    <button mat-menu-item (click)="login()">
+      <mat-icon>login</mat-icon>Anmelden
+    </button>
+    }
+  </mat-menu>
+</mat-toolbar>
+<main>
+  <router-outlet></router-outlet>
+</main>
