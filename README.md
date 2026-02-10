@@ -11,6 +11,12 @@ Autor: Luca Bucher
 
 ## Tasks ausführen
 
+Um die benötigte Infrastruktur (Datenbank / Keycloak) zu starten (Docker muss installiert sein und laufen), benutze:
+
+```sh
+docker compose up
+```
+
 Um den Angular Dev-Server (Client) zu starten, benutze:
 
 ```sh
