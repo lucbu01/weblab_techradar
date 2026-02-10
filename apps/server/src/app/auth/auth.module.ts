@@ -5,6 +5,5 @@ import { Module } from '@nestjs/common';
 @Module({
   imports: [PassportModule],
   providers: [JwtStrategy],
-  exports: [],
 })
 export class AuthModule {}
