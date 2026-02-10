@@ -8,6 +8,8 @@ Autor: Luca Bucher
 - [Dokumentation](./Dokumentation.md)
 - [Arbeitsjournal](./Arbeitsjournal.md)
 - [Fazit und Reflexion](./Reflexion.md)
+- [Web Programming Lab Projektauftrag](https://github.com/web-programming-lab/web-programming-lab-projekt/blob/main/README.md)
+- [Beschrieb Technologie-Radar](https://github.com/web-programming-lab/web-programming-lab-projekt/blob/main/Technologie-Radar.md)
 
 ## Tasks ausführen
 

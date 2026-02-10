@@ -53,5 +53,12 @@ Initial wurde ein docker-compose.yml erstellt mit Keycloak als Auth-Provider, ei
 
 Keycloak wurde nun auch ins Backend integriert. Damit das Frontend nicht wissen muss, welchen Keycloak / Auth Provider es verwenden muss, wurde eine Environment-API im Backend erstellt. Im Backend kann der Auth Provider über Environment-Variablen gesetzt werden. Ein entsprechendes .env-File wurde ebenfalls erstellt. Im Frontend wurde Angular Material integriert und Routen für den Tech-Radar Viewer, die Technologie-Verwaltung und die Benutzer-Verwaltung erstellt und die Routen mittels AuthGuard geschützt.
 
+### Abend
+- Start: 20:00 Uhr
+- Ende: 24:00 Uhr
+- Aufwand: 4h
+
+MongoDB wurde integriert. Für die Technologien wurde eine API erstellt. Momentan ist CREATE und READ möglich. UPDATE und DELETE werden noch kommen. Zur API wurde auch noch Swagger UI integriert, was am Anfang (vor Allem wegen dem Zusammenspiel mit Keycloak) zu Problemen führte, da standardmässig eine falsche Redirect URL mitgeschickt wurde. Dies konnte aber mit einem custom JavaScript gefixt werden.
+
 ## Zusammenfassung
-Aufwand insgesamt: 22h
+Aufwand insgesamt: 26h
