@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EnvironmentModule } from './environment/environment.module';
 import { TechnologyModule } from './technology/technology.module';
+import { AuditModule } from './audit/audit.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { TechnologyModule } from './technology/technology.module';
       autoCreate: true,
       dbName: process.env.MONGODB_DATABASE,
     }),
+    AuditModule,
     TechnologyModule,
   ],
   controllers: [AppController],
