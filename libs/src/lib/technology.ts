@@ -9,12 +9,12 @@ export type TechnologyRing = 'ADOPT' | 'TRIAL' | 'ASSESS' | 'HOLD';
 export type Technology = {
   id: string;
   createdAt: string;
-  publishedAt: string;
+  publishedAt?: string;
   updatedAt: string;
   name: string;
   published: boolean;
   category: TechnologyCategory;
-  ring: TechnologyRing;
+  ring?: TechnologyRing;
   description: string;
-  classificationDescription: string;
+  classificationDescription?: string;
 };

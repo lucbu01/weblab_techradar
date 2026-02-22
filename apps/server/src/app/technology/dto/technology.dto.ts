@@ -13,7 +13,7 @@ export class TechnologyDto implements Technology {
   createdAt: string;
 
   @ApiProperty({ type: 'string', format: 'date-time' })
-  publishedAt: string;
+  publishedAt?: string;
 
   @ApiProperty({ type: 'string', format: 'date-time' })
   updatedAt: string;
@@ -30,11 +30,11 @@ export class TechnologyDto implements Technology {
   category: TechnologyCategory;
 
   @ApiProperty({ enum: ['ADOPT', 'TRIAL', 'ASSESS', 'HOLD'] })
-  ring: TechnologyRing;
+  ring?: TechnologyRing;
 
   @ApiProperty({ type: 'string' })
   description: string;
 
   @ApiProperty({ type: 'string' })
-  classificationDescription: string;
+  classificationDescription?: string;
 }

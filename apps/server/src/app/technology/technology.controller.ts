@@ -23,6 +23,7 @@ import {
 import { Auth } from '../auth/auth.decorator';
 import { TechnologyDto } from './dto/technology.dto';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
+import { ParseObjectIdPipe } from './parse-objectid.pipe';
 
 @ApiBearerAuth('keycloak')
 @ApiTags('technologies')
@@ -78,12 +79,27 @@ export class TechnologyController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 404, description: 'Not Found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  async getTechnologyById(@Param('id') id: string, @Res() res: Response) {
+  async getTechnologyById(
+    @Param('id', ParseObjectIdPipe) id: string,
+    @Res() res: Response,
+  ) {
     const technology = await this.technologyService.getTechnologyById(id);
     if (!technology) {
       res.status(404).send();
+    } else {
+      res.status(200).json({
+        id: technology._id.toString(),
+        name: technology.name,
+        published: technology.published,
+        createdAt: technology.createdAt.toISOString(),
+        publishedAt: technology.publishedAt?.toISOString(),
+        updatedAt: technology.updatedAt.toISOString(),
+        category: technology.category,
+        ring: technology.ring,
+        description: technology.description,
+        classificationDescription: technology.classificationDescription,
+      });
     }
-    res.status(200).json(technology);
   }
 
   @Post()

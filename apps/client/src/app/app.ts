@@ -1,12 +1,14 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Auth, UserInfo } from './auth/auth';
+import { Auth } from './auth/auth';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/list';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
 
 @Component({
   imports: [
@@ -27,16 +29,16 @@ import { MatDivider } from '@angular/material/list';
 export class App implements OnInit {
   protected auth = inject(Auth);
   protected http = inject(HttpClient);
-  protected readonly user = signal<UserInfo | undefined>(undefined);
+  protected readonly user = toSignal(this.auth.getUserInfo());
+  protected readonly apiCall = toObservable(this.user).pipe(
+    switchMap((ui) => {
+      console.log(ui);
+      return this.http.get('/api');
+    }),
+  );
 
   ngOnInit() {
-    this.auth.getUserInfo().subscribe((ui) => {
-      console.log(ui);
-      this.user.set(ui);
-      this.http
-        .get('/api')
-        .subscribe((res) => console.log('api call with auth worked: ', res));
-    });
+    this.apiCall.subscribe((res) => console.log('api call worked: ', res));
   }
 
   logoff() {
