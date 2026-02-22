@@ -8,15 +8,7 @@ import {
   ValidateIf,
 } from 'class-validator';
 import { TechnologyCategory, TechnologyRing } from '@techradar/libs';
-
-const TECHNOLOGY_CATEGORIES = [
-  'TECHNIQUES',
-  'TOOLS',
-  'PLATFORMS',
-  'LANGS_FRAMEWORKS',
-] as const;
-
-const TECHNOLOGY_RINGS = ['ADOPT', 'TRIAL', 'ASSESS', 'HOLD'] as const;
+import { TECHNOLOGY_CATEGORIES, TECHNOLOGY_RINGS } from './technology.dto';
 
 export class CreateTechnologyDto {
   @ApiProperty({ required: true })

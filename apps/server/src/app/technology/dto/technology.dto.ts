@@ -5,6 +5,15 @@ import {
   TechnologyRing,
 } from '@techradar/libs';
 
+export const TECHNOLOGY_CATEGORIES = [
+  'TECHNIQUES',
+  'TOOLS',
+  'PLATFORMS',
+  'LANGS_FRAMEWORKS',
+] as const;
+
+export const TECHNOLOGY_RINGS = ['ADOPT', 'TRIAL', 'ASSESS', 'HOLD'] as const;
+
 export class TechnologyDto implements Technology {
   @ApiProperty({ type: 'string' })
   id: string;
@@ -25,11 +34,11 @@ export class TechnologyDto implements Technology {
   published: boolean;
 
   @ApiProperty({
-    enum: ['TECHNIQUES', 'TOOLS', 'PLATFORMS', 'LANGS_FRAMEWORKS'],
+    enum: TECHNOLOGY_CATEGORIES,
   })
   category: TechnologyCategory;
 
-  @ApiProperty({ enum: ['ADOPT', 'TRIAL', 'ASSESS', 'HOLD'] })
+  @ApiProperty({ enum: TECHNOLOGY_RINGS })
   ring?: TechnologyRing;
 
   @ApiProperty({ type: 'string' })
