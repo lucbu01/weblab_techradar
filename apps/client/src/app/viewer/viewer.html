@@ -1,1 +1,74 @@
-<p>viewer works!</p>
+<div class="radar-container">
+  <div class="radar-layout">
+    <mat-card class="radar-visualization">
+      <mat-card-content>
+        <svg
+          viewBox="0 0 800 800"
+          width="100%"
+          height="100%"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="400" cy="400" r="380" class="ring-assess" />
+          <circle cx="400" cy="400" r="280" class="ring-trial" />
+          <circle cx="400" cy="400" r="180" class="ring-adopt" />
+          <circle cx="400" cy="400" r="80" class="ring-hold" />
+
+          <line x1="400" y1="20" x2="400" y2="780" class="radar-line" />
+          <line x1="20" y1="400" x2="780" y2="400" class="radar-line" />
+
+          <text x="405" y="40" class="category-label">TECHNIQUES</text>
+          <text x="760" y="415" class="category-label text-anchor-end">
+            PLATFORMS
+          </text>
+          <text x="405" y="775" class="category-label">TOOLS</text>
+          <text x="40" y="415" class="category-label">LANGS & FRAMEWORKS</text>
+
+          @for (tech of technologies(); track tech.id) { @let point =
+          getPoint(tech);
+          <circle
+            [attr.cx]="point.x"
+            [attr.cy]="point.y"
+            r="10"
+            [attr.class]="'dot ' + tech.ring?.toLowerCase()"
+            matTooltip="{{ tech.name }} - {{ tech.ring }}"
+          >
+            <title>{{ tech.name }} - {{ tech.ring }}</title>
+          </circle>
+          }
+        </svg>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="radar-sidebar">
+      <mat-card class="radar-legend">
+        <mat-card-header>
+          <mat-card-title>Legende</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-chip-set aria-label="Radar Rings">
+            <mat-chip class="chip-adopt">ADOPT</mat-chip>
+            <mat-chip class="chip-trial">TRIAL</mat-chip>
+            <mat-chip class="chip-assess">ASSESS</mat-chip>
+            <mat-chip class="chip-hold">HOLD</mat-chip>
+          </mat-chip-set>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="radar-list-card">
+        <mat-card-header>
+          <mat-card-title>Technologien</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list class="tech-list">
+            @for (tech of technologies(); track tech.id) {
+            <mat-list-item>
+              <span matListItemTitle>{{ tech.name }}</span>
+              <span matListItemLine>{{ tech.category }} - {{ tech.ring }}</span>
+            </mat-list-item>
+            }
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

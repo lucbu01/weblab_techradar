@@ -1,0 +1,115 @@
+.radar-container {
+  padding: 16px;
+  color: var(--mat-sys-on-surface);
+}
+
+.radar-layout {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.radar-visualization {
+  flex: 1;
+  min-width: 500px;
+  max-width: 850px;
+  background-color: var(--mat-sys-surface-container);
+}
+
+.radar-sidebar {
+  flex: 0 0 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+svg {
+  display: block;
+}
+
+circle {
+  fill: none;
+  stroke: var(--mat-sys-outline-variant);
+  stroke-width: 1px;
+}
+
+.radar-line {
+  stroke: var(--mat-sys-outline-variant);
+  stroke-width: 1px;
+}
+
+.ring-hold {
+  fill: var(--mat-sys-surface-container-high);
+}
+.ring-adopt {
+  fill: var(--mat-sys-surface-container-low);
+}
+.ring-trial {
+  fill: var(--mat-sys-surface-container);
+}
+.ring-assess {
+  fill: var(--mat-sys-surface-container-high);
+}
+
+.dot {
+  stroke-width: 2px;
+  stroke: var(--mat-sys-surface);
+  transition: r 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    r: 14;
+  }
+}
+
+.dot.adopt,
+.chip-adopt {
+  fill: #4caf50; // Green 500
+  --mat-chip-elevated-container-color: #4caf50;
+  --mat-chip-label-text-color: white;
+}
+.dot.trial,
+.chip-trial {
+  fill: #fbc02d; // Yellow 700
+  --mat-chip-elevated-container-color: #fbc02d;
+  --mat-chip-label-text-color: black;
+}
+.dot.assess,
+.chip-assess {
+  fill: #ff9800; // Orange 500
+  --mat-chip-elevated-container-color: #ff9800;
+  --mat-chip-label-text-color: white;
+}
+.dot.hold,
+.chip-hold {
+  fill: #f44336; // Red 500
+  --mat-chip-elevated-container-color: #f44336;
+  --mat-chip-label-text-color: white;
+}
+
+.category-label {
+  font-size: 14px;
+  font-weight: 500;
+  fill: var(--mat-sys-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.text-anchor-end {
+  text-anchor: end;
+}
+
+.radar-legend,
+.radar-list-card {
+  background-color: var(--mat-sys-surface-container-low);
+}
+
+.tech-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+mat-chip {
+  --mdc-chip-label-text-size: 12px;
+  font-weight: bold;
+}
