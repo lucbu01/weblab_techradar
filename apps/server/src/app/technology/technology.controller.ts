@@ -101,7 +101,7 @@ export class TechnologyController {
     description: 'Roles: `CTO`, `TECHLEAD`',
   })
   @ApiBody({ type: CreateTechnologyDto })
-  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 201, description: 'Created', type: TechnologyDto })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })

@@ -1,9 +1,16 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Auth } from '../auth/auth.decorator';
 import { AuditService } from './audit.service';
 import { AdminLoginAudit } from './admin-login-audit.schema';
 
+@ApiBearerAuth('keycloak')
 @ApiTags('audit')
 @Controller('audit')
 export class AuditController {
@@ -17,6 +24,8 @@ export class AuditController {
     description: 'List of audit entries',
     type: [AdminLoginAudit],
   })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth('CTO')
   @Get()
   async findAll(): Promise<AdminLoginAudit[]> {
