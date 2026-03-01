@@ -1,21 +1,37 @@
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
-import { NxWelcome } from './nx-welcome';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
+import { Auth } from './auth/auth';
+import { of } from 'rxjs';
+
+import { vi } from 'vitest';
 
 describe('App', () => {
+  let authMock: any;
+
   beforeEach(async () => {
+    authMock = {
+      getUserInfo: vi.fn().mockReturnValue(of({ appRoles: [] })),
+      authorize: vi.fn(),
+      logoff: vi.fn(),
+    };
+
     await TestBed.configureTestingModule({
-      imports: [App, NxWelcome],
+      imports: [App],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideRouter([]),
+        { provide: Auth, useValue: authMock },
+      ],
     }).compileComponents();
   });
 
-  it('should render title', async () => {
+  it('should create', () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome client',
-    );
-    expect(true).toBeFalsy();
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
   });
 });

@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="mat-bg-primary-container">
+<mat-toolbar color="primary">
   <span>Technologie-Radar</span>
   <span class="spacer"></span>
   @if (user(); as user) { @if (user.appRoles.length > 0) {
@@ -6,19 +6,20 @@
   } @if(user.appRoles.includes('CTO') || user.appRoles.includes('TECHLEAD')) {
   <button mat-button routerLink="/technologies">Technologien verwalten</button>
   } @if(user.appRoles.includes('CTO') ) {
-  <button mat-button routerLink="/users">Benutzer verwalten</button>
+  <a mat-button [href]="manageUserUrl()" target="_blank">Benutzer verwalten</a>
   } }
   <button
     mat-icon-button
     [matMenuTriggerFor]="userMenu"
     aria-label="Open user menu"
+    color="primary"
   >
-    <mat-icon class="primary">account_circle</mat-icon>
+    <mat-icon>account_circle</mat-icon>
   </button>
   <mat-menu #userMenu="matMenu">
     @if (user(); as user) {
     <div class="menu-info-block" role="presentation">
-      <div class="primary">Angemeldet als</div>
+      <div class="primary-text">Angemeldet als</div>
       <div>{{ user?.name }}</div>
       <div>{{ user?.email }}</div>
     </div>
