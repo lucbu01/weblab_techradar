@@ -60,5 +60,30 @@ Keycloak wurde nun auch ins Backend integriert. Damit das Frontend nicht wissen 
 
 MongoDB wurde integriert. Für die Technologien wurde eine API erstellt. Momentan ist CREATE und READ möglich. UPDATE und DELETE werden noch kommen. Zur API wurde auch noch Swagger UI integriert, was am Anfang (vor Allem wegen dem Zusammenspiel mit Keycloak) zu Problemen führte, da standardmässig eine falsche Redirect URL mitgeschickt wurde. Dies konnte aber mit einem custom JavaScript gefixt werden.
 
+## Sonntag, 22. Februar 2026
+
+### Nachmittag
+- Start: 12:00 Uhr
+- Ende: 18:00 Uhr
+- Aufwand: 6h
+
+UPDATE und DELETE Endpoints für Technologien wurden erstellt. Die Admin-Logins Zugriffe werden jetzt in die DB gespeichert. Dadurch können wir später die Zugriffe nachverfolgen. Der Zugriff wird nur einmal pro User und Token gespeichert. Erste Tests wurden geschrieb.
+
+## Sonntag, 1. März 2026
+
+### Morgen
+- Start: 06:00 Uhr
+- Ende: 10:00 Uhr
+- Aufwand: 4h
+
+Die erste Version vom Technologieradar Viewer wurde erstellt. Die Verlinkung zur Userverwaltung im Keycloak wurde korrigiert.
+
+## Dienstag, 3. März 2026
+- Start: 19:30 Uhr
+- Ende: 22:30 Uhr
+- Aufwand: 3h
+
+Ein Detail-Viewer in Form eines Dialogs wurde erstellt.
+
 ## Zusammenfassung
-Aufwand insgesamt: 26h
+Aufwand insgesamt: 39h
