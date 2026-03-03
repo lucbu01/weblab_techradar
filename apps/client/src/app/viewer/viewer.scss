@@ -62,29 +62,17 @@ circle {
   }
 }
 
-.dot.adopt,
-.chip-adopt {
-  fill: #4caf50; // Green 500
-  --mat-chip-elevated-container-color: #4caf50;
-  --mat-chip-label-text-color: white;
+.dot.adopt {
+  fill: var(--color-ring-adopt);
 }
-.dot.trial,
-.chip-trial {
-  fill: #fbc02d; // Yellow 700
-  --mat-chip-elevated-container-color: #fbc02d;
-  --mat-chip-label-text-color: black;
+.dot.trial {
+  fill: var(--color-ring-trial);
 }
-.dot.assess,
-.chip-assess {
-  fill: #ff9800; // Orange 500
-  --mat-chip-elevated-container-color: #ff9800;
-  --mat-chip-label-text-color: white;
+.dot.assess {
+  fill: var(--color-ring-assesses);
 }
-.dot.hold,
-.chip-hold {
-  fill: #f44336; // Red 500
-  --mat-chip-elevated-container-color: #f44336;
-  --mat-chip-label-text-color: white;
+.dot.hold {
+  fill: var(--color-ring-hold);
 }
 
 .category-label {
@@ -99,8 +87,7 @@ circle {
   text-anchor: end;
 }
 
-.radar-legend,
-.radar-list-card {
+.radar-legend {
   background-color: var(--mat-sys-surface-container-low);
 }
 
@@ -109,7 +96,12 @@ circle {
   overflow-y: auto;
 }
 
-mat-chip {
-  --mdc-chip-label-text-size: 12px;
-  font-weight: bold;
+.radar-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 600px;
+  gap: 16px;
+  color: var(--mat-sys-on-surface-variant);
 }

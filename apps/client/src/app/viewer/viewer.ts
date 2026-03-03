@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { TechnologyService } from '../technology.service';
 import {
   Technology,
@@ -10,7 +10,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatTooltip } from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Ring } from '../chips/ring';
 
 @Component({
   selector: 'techradar-viewer',
@@ -21,16 +26,52 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatListModule,
     MatIconModule,
     MatChipsModule,
-    MatTooltip,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    RouterLink,
+    Ring,
   ],
   templateUrl: './viewer.html',
   styleUrl: './viewer.scss',
 })
-export class Viewer implements OnInit {
+export class Viewer implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
   private technologyService = inject(TechnologyService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private dialogRef?: MatDialogRef<any>;
   technologies = signal<Technology[]>([]);
 
   ngOnInit() {
+    this.loadTechnologies();
+    this.subscriptions.push(
+      this.activatedRoute.fragment.subscribe(async (id) => {
+        if (this.dialogRef) {
+          this.dialogRef.close();
+          this.dialogRef = undefined;
+        }
+        if (id) {
+          const c = await import('../technology-detail/technology-detail');
+          this.dialogRef = this.dialog.open(c.TechnologyDetail, {
+            data: { id },
+            width: '800px',
+            maxWidth: 800,
+            restoreFocus: false,
+          });
+          this.dialogRef.afterClosed().subscribe(() => {
+            this.router.navigate([], { fragment: '' });
+          });
+        }
+      }),
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s) => s.unsubscribe());
+  }
+
+  private loadTechnologies() {
     this.technologyService.getTechnologies(true).subscribe((techs) => {
       this.technologies.set(techs);
     });

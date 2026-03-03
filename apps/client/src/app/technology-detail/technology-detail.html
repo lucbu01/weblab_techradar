@@ -1,0 +1,29 @@
+@if (technology(); as technology) {
+<h2 mat-dialog-title>{{ technology.name }}</h2>
+<mat-dialog-content>
+  <mat-chip-set>
+    <techradar-category [category]="technology.category"></techradar-category>
+    @if (technology.ring) {
+    <techradar-ring [ring]="technology.ring"></techradar-ring>
+    } @if (!technology.published) {
+    <mat-chip disabled>Entwurf</mat-chip>
+    }
+  </mat-chip-set>
+  <h3>Beschreibung</h3>
+  <p>{{technology.description}}</p>
+  @if (technology.classificationDescription) {
+  <h3>Einstufung</h3>
+  <p>{{technology.classificationDescription}}</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions>
+  @if (user()?.appRoles?.includes('CTO') ||
+  user()?.appRoles?.includes('TECHLEAD')) { @if (technology.published) {
+  <button mat-button>Beschreibung ändern</button>
+  <button mat-button>Einstufung ändern</button>
+  } @else {
+  <button mat-button>Publizieren</button>
+  }}
+  <button mat-button mat-dialog-close cdkFocusInitial>Schliessen</button>
+</mat-dialog-actions>
+}

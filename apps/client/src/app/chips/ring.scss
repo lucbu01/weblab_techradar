@@ -1,0 +1,20 @@
+.chip-adopt {
+  --mat-chip-elevated-container-color: var(--color-ring-adopt);
+  --mat-chip-outline-color: var(--color-ring-adopt);
+  --mat-chip-label-text-color: black;
+}
+.chip-trial {
+  --mat-chip-elevated-container-color: var(--color-ring-trial);
+  --mat-chip-outline-color: var(--color-ring-trial);
+  --mat-chip-label-text-color: black;
+}
+.chip-assess {
+  --mat-chip-elevated-container-color: var(--color-ring-assess);
+  --mat-chip-outline-color: var(--color-ring-assess);
+  --mat-chip-label-text-color: black;
+}
+.chip-hold {
+  --mat-chip-elevated-container-color: var(--color-ring-hold);
+  --mat-chip-outline-color: var(--color-ring-hold);
+  --mat-chip-label-text-color: black;
+}

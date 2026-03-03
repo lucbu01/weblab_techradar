@@ -2,6 +2,7 @@
   <div class="radar-layout">
     <mat-card class="radar-visualization">
       <mat-card-content>
+        @defer (on timer(10ms)) {
         <svg
           viewBox="0 0 800 800"
           width="100%"
@@ -31,11 +32,29 @@
             r="10"
             [attr.class]="'dot ' + tech.ring?.toLowerCase()"
             matTooltip="{{ tech.name }} - {{ tech.ring }}"
+            [routerLink]="[]"
+            [fragment]="tech.id"
+          ></circle>
+          <text
+            [attr.x]="point.x"
+            [attr.y]="point.y"
+            font-size="14"
+            font-weight="400"
+            text-anchor="middle"
+            dominant-baseline="central"
+            pointer-events="none"
+            fill="white"
           >
-            <title>{{ tech.name }} - {{ tech.ring }}</title>
-          </circle>
+            {{tech.name.substring(0,1).toUpperCase()}}
+          </text>
           }
         </svg>
+        } @placeholder {
+        <div class="radar-placeholder">
+          <mat-spinner diameter="40"></mat-spinner>
+          <span>Radar wird geladen...</span>
+        </div>
+        }
       </mat-card-content>
     </mat-card>
 
@@ -46,27 +65,11 @@
         </mat-card-header>
         <mat-card-content>
           <mat-chip-set aria-label="Radar Rings">
-            <mat-chip class="chip-adopt">ADOPT</mat-chip>
-            <mat-chip class="chip-trial">TRIAL</mat-chip>
-            <mat-chip class="chip-assess">ASSESS</mat-chip>
-            <mat-chip class="chip-hold">HOLD</mat-chip>
+            <techradar-ring ring="ADOPT"></techradar-ring>
+            <techradar-ring ring="TRIAL"></techradar-ring>
+            <techradar-ring ring="ASSESS"></techradar-ring>
+            <techradar-ring ring="HOLD"></techradar-ring>
           </mat-chip-set>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="radar-list-card">
-        <mat-card-header>
-          <mat-card-title>Technologien</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <mat-list class="tech-list">
-            @for (tech of technologies(); track tech.id) {
-            <mat-list-item>
-              <span matListItemTitle>{{ tech.name }}</span>
-              <span matListItemLine>{{ tech.category }} - {{ tech.ring }}</span>
-            </mat-list-item>
-            }
-          </mat-list>
         </mat-card-content>
       </mat-card>
     </div>
