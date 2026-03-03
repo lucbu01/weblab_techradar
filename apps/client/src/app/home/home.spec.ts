@@ -7,7 +7,7 @@ import { provideRouter } from '@angular/router';
 describe('Home', () => {
   let component: Home;
   let fixture: ComponentFixture<Home>;
-  let authMock: any;
+  let authMock;
 
   beforeEach(async () => {
     authMock = {

@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Ring } from '../chips/ring';
+import type { TechnologyDetail } from '../technology-detail/technology-detail';
 
 @Component({
   selector: 'techradar-viewer',
@@ -40,7 +41,7 @@ export class Viewer implements OnInit, OnDestroy {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
-  private dialogRef?: MatDialogRef<any>;
+  private dialogRef?: MatDialogRef<TechnologyDetail>;
   technologies = signal<Technology[]>([]);
 
   ngOnInit() {

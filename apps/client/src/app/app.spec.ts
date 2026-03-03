@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 import { vi } from 'vitest';
 
 describe('App', () => {
-  let authMock: any;
+  let authMock;
 
   beforeEach(async () => {
     authMock = {
