@@ -46,6 +46,15 @@ services:
     ports:
       - "27017:27017"
 
+  techradar:
+    profiles: ["app"]
+    image: lucbu01/techradar:latest
+    container_name: techradar
+    environment:
+      MONGODB_URI: mongodb://admin:passwordChangeInProduction@mongodb:27017/techradar
+    ports:
+      - "3000:3000"
+
 volumes:
   postgres_data:
   mongodb_data:
