@@ -6,9 +6,18 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { EnvironmentModule } from './environment/environment.module';
 import { TechnologyModule } from './technology/technology.module';
 import { AuditModule } from './audit/audit.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'node:path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client', 'browser'),
+      exclude: ['/api', '/api/{*any}'],
+      serveStaticOptions: {
+        index: false,
+      },
+    }),
     AuthModule,
     EnvironmentModule,
     MongooseModule.forRoot(process.env.MONGODB_URI, {
