@@ -41,14 +41,18 @@ export class TechnologyService {
     dto: UpdateTechnologyDto,
   ): Promise<TechnologyDocument> {
     const updated = await this.technologyModel
-      .findByIdAndUpdate(id, {
-        $set: {
-          name: dto.name,
-          category: dto.category,
-          description: dto.description,
-          updatedAt: new Date(),
+      .findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            name: dto.name,
+            category: dto.category,
+            description: dto.description,
+            updatedAt: new Date(),
+          },
         },
-      })
+        { returnDocument: 'after' },
+      )
       .exec();
 
     if (!updated) throw new NotFoundException('Technology not found');
@@ -60,13 +64,17 @@ export class TechnologyService {
     dto: UpsertTechnologyClassificationDto,
   ): Promise<TechnologyDocument> {
     const updated = await this.technologyModel
-      .findByIdAndUpdate(id, {
-        $set: {
-          ring: dto.ring,
-          classificationDescription: dto.classificationDescription,
-          updatedAt: new Date(),
+      .findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            ring: dto.ring,
+            classificationDescription: dto.classificationDescription,
+            updatedAt: new Date(),
+          },
         },
-      })
+        { returnDocument: 'after' },
+      )
       .exec();
 
     if (!updated) throw new NotFoundException('Technology not found');
