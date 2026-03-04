@@ -7,10 +7,14 @@ import {
   Matches,
   ValidateIf,
 } from 'class-validator';
-import { TechnologyCategory, TechnologyRing } from '@techradar/libs';
+import {
+  CreateTechnology,
+  TechnologyCategory,
+  TechnologyRing,
+} from '@techradar/libs';
 import { TECHNOLOGY_CATEGORIES, TECHNOLOGY_RINGS } from './technology.dto';
 
-export class CreateTechnologyDto {
+export class CreateTechnologyDto implements CreateTechnology {
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()

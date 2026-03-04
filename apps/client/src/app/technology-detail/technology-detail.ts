@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
+  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -13,6 +14,8 @@ import { MatButton } from '@angular/material/button';
 import { Ring } from '../chips/ring';
 import { Category } from '../chips/category';
 import { Auth } from '../auth/auth';
+import type { EditMode } from '../technology-edit/technology-edit';
+import { Technology } from '@techradar/libs';
 
 @Component({
   selector: 'techradar-technology-detail',
@@ -30,12 +33,30 @@ import { Auth } from '../auth/auth';
   templateUrl: './technology-detail.html',
   styleUrl: './technology-detail.scss',
 })
-export class TechnologyDetail {
+export class TechnologyDetail implements OnInit {
   private data: { id: string } = inject(MAT_DIALOG_DATA);
+  private dialog = inject(MatDialog);
   private technologyService = inject(TechnologyService);
-  protected technology = toSignal(
-    this.technologyService.getTechnologyById(this.data.id),
-  );
+  protected technology = signal<Technology | undefined>(undefined);
   private auth = inject(Auth);
   protected user = toSignal(this.auth.getUserInfo());
+
+  ngOnInit() {
+    this.technologyService
+      .getTechnologyById(this.data.id)
+      .subscribe((technology) => this.technology.set(technology));
+  }
+
+  async openEditDialog(mode: EditMode) {
+    const c = await import('../technology-edit/technology-edit');
+    this.dialog
+      .open(c.TechnologyEdit, {
+        data: { id: this.data.id, mode },
+        width: '600px',
+        maxWidth: 600,
+        restoreFocus: false,
+      })
+      .afterClosed()
+      .subscribe((technology: Technology) => this.technology.set(technology));
+  }
 }

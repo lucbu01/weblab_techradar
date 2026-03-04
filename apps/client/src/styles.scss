@@ -46,3 +46,8 @@ body {
 .primary-text {
   color: var(--mat-sys-primary);
 }
+
+mat-dialog-actions {
+  --mat-dialog-actions-alignment: flex-start;
+  flex-direction: row-reverse;
+}

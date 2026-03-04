@@ -3,6 +3,12 @@
   color: var(--mat-sys-on-surface);
 }
 
+.create-button {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+}
+
 .radar-layout {
   display: flex;
   gap: 24px;

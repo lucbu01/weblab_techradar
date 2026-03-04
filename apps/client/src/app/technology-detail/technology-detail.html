@@ -19,11 +19,15 @@
 <mat-dialog-actions>
   @if (user()?.appRoles?.includes('CTO') ||
   user()?.appRoles?.includes('TECHLEAD')) { @if (technology.published) {
-  <button mat-button>Beschreibung ändern</button>
-  <button mat-button>Einstufung ändern</button>
+  <button mat-button (click)="openEditDialog('classify')">
+    Einstufung ändern
+  </button>
+  <button mat-button (click)="openEditDialog('edit')">
+    Beschreibung ändern
+  </button>
   } @else {
-  <button mat-button>Publizieren</button>
+  <button mat-button (click)="openEditDialog('publish')">Publizieren</button>
   }}
-  <button mat-button mat-dialog-close cdkFocusInitial>Schliessen</button>
+  <button mat-button mat-dialog-close>Schliessen</button>
 </mat-dialog-actions>
 }

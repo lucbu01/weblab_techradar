@@ -17,6 +17,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Ring } from '../chips/ring';
 import type { TechnologyDetail } from '../technology-detail/technology-detail';
+import { MatFabButton } from '@angular/material/button';
 
 @Component({
   selector: 'techradar-viewer',
@@ -31,6 +32,7 @@ import type { TechnologyDetail } from '../technology-detail/technology-detail';
     MatProgressSpinnerModule,
     RouterLink,
     Ring,
+    MatFabButton,
   ],
   templateUrl: './viewer.html',
   styleUrl: './viewer.scss',
@@ -51,13 +53,14 @@ export class Viewer implements OnInit, OnDestroy {
         if (this.dialogRef) {
           this.dialogRef.close();
           this.dialogRef = undefined;
+          this.loadTechnologies();
         }
         if (id) {
           const c = await import('../technology-detail/technology-detail');
           this.dialogRef = this.dialog.open(c.TechnologyDetail, {
             data: { id },
-            width: '800px',
-            maxWidth: 800,
+            width: '600px',
+            maxWidth: 600,
             restoreFocus: false,
           });
           this.dialogRef.afterClosed().subscribe(() => {
@@ -66,6 +69,16 @@ export class Viewer implements OnInit, OnDestroy {
         }
       }),
     );
+  }
+
+  async addTechnology() {
+    const c = await import('../technology-edit/technology-edit');
+    this.dialog.open(c.TechnologyEdit, {
+      data: { mode: 'create' },
+      width: '600px',
+      maxWidth: 600,
+      restoreFocus: false,
+    });
   }
 
   ngOnDestroy() {

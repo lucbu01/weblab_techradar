@@ -1,6 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Technology } from '@techradar/libs';
+import {
+  CreateTechnology,
+  Technology,
+  UpdateTechnology,
+  UpsertTechnologyClassification,
+} from '@techradar/libs';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,5 +25,40 @@ export class TechnologyService {
 
   getTechnologyById(id: string): Observable<Technology> {
     return this.http.get<Technology>(`${this.apiUrl}/${id}`);
+  }
+
+  createTechnology(technology: CreateTechnology): Observable<Technology> {
+    return this.http.post<Technology>(this.apiUrl, technology);
+  }
+
+  updateTechnology(
+    id: string,
+    technology: UpdateTechnology,
+  ): Observable<Technology> {
+    return this.http.patch<Technology>(`${this.apiUrl}/${id}`, technology);
+  }
+
+  upsertTechnologyClassification(
+    id: string,
+    technology: UpsertTechnologyClassification,
+  ): Observable<Technology> {
+    return this.http.put<Technology>(
+      `${this.apiUrl}/${id}/classification`,
+      technology,
+    );
+  }
+
+  publishTechnology(
+    id: string,
+    technology: UpsertTechnologyClassification,
+  ): Observable<Technology> {
+    return this.http.put<Technology>(
+      `${this.apiUrl}/${id}/publication`,
+      technology,
+    );
+  }
+
+  deleteTechnology(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

@@ -1,0 +1,111 @@
+<h2 mat-dialog-title>Technologie {{actionLabel}}</h2>
+@let tech = technology(); @let form = formGroup();
+<mat-dialog-content>
+  <form id="form" [formGroup]="form" (ngSubmit)="onSubmit($event)">
+    @if (data.mode !== 'create') {
+    <h3>{{tech?.name}}</h3>
+    <mat-chip-set>
+      @if (['publish', 'classify'].includes(data.mode)) {
+      <techradar-category [category]="tech?.category"></techradar-category>
+      } @if (tech?.ring && data.mode === 'edit') {
+      <techradar-ring [ring]="tech?.ring"></techradar-ring>
+      } @if (!tech?.published) {
+      <mat-chip disabled>Entwurf</mat-chip>
+      }
+    </mat-chip-set>
+    @if (['publish', 'classify'].includes(data.mode)) {
+    <h3>Beschreibung</h3>
+    <p>{{tech?.description}}</p>
+    <mat-divider></mat-divider>
+    } @if (tech?.classificationDescription && data.mode === 'edit') {
+    <h3>Einstufung</h3>
+    <p>{{tech?.classificationDescription}}</p>
+    <mat-divider></mat-divider>
+    } } @if (['create', 'edit'].includes(data.mode)) {
+    <p>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" />
+        @if(form.get('name')?.invalid) {
+        <mat-error>Pflichtfeld</mat-error>
+        }
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Kategorie</mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="TECHNIQUES">Techniques</mat-option>
+          <mat-option value="TOOLS">Tools</mat-option>
+          <mat-option value="PLATFORMS">Platforms</mat-option>
+          <mat-option value="LANGS_FRAMEWORKS"
+            >Languages & Frameworks</mat-option
+          >
+        </mat-select>
+        @if(form.get('category')?.invalid) {
+        <mat-error>Pflichtfeld</mat-error>
+        }
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Beschreibung</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+        @if(form.get('description')?.invalid) {
+        <mat-error>Pflichtfeld</mat-error>
+        }
+      </mat-form-field>
+    </p>
+    } @if (['create', 'publish', 'classify'].includes(this.data.mode)) {
+    <p>
+      <mat-form-field>
+        <mat-label>Klassifizierung</mat-label>
+        <mat-select formControlName="ring">
+          <mat-option value="ADOPT">Adopt</mat-option>
+          <mat-option value="TRIAL">Trial</mat-option>
+          <mat-option value="ASSESS">Assess</mat-option>
+          <mat-option value="HOLD">Hold</mat-option>
+        </mat-select>
+        @if(form.get('ring')?.hasError('required')) {
+        <mat-error>Pflichtfeld</mat-error>
+        }
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Beschreibung der Klassifizierung</mat-label>
+        <textarea
+          matInput
+          formControlName="classificationDescription"
+        ></textarea>
+        @if(form.get('classificationDescription')?.hasError('required')) {
+        <mat-error>Pflichtfeld</mat-error>
+        }
+      </mat-form-field>
+    </p>
+    }
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  @if(data.mode !== 'edit' || tech?.published) {
+  <button
+    mat-button
+    [disabled]="form.invalid"
+    form="form"
+    type="submit"
+    value="publish"
+  >
+    Publizieren
+  </button>
+  } @if (data.mode === 'create' || (data.mode === 'edit' && !tech?.published)) {
+  <button
+    mat-button
+    [disabled]="form.invalid && !form.hasError('draft')"
+    type="submit"
+    value="draft"
+  >
+    Entwurf speichern
+  </button>
+  }
+  <button mat-button mat-dialog-close>Abbrechen</button>
+</mat-dialog-actions>

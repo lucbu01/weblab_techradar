@@ -1,9 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsIn, IsNotEmpty, IsString, Matches } from 'class-validator';
-import { TechnologyRing } from '@techradar/libs';
+import {
+  TechnologyRing,
+  UpsertTechnologyClassification,
+} from '@techradar/libs';
 import { TECHNOLOGY_RINGS } from './technology.dto';
 
-export class UpsertTechnologyClassificationDto {
+export class UpsertTechnologyClassificationDto implements UpsertTechnologyClassification {
   @ApiProperty({ required: true, enum: TECHNOLOGY_RINGS })
   @IsIn(TECHNOLOGY_RINGS)
   ring: TechnologyRing;
