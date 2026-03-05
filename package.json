@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npx nx run-many --target=serve --projects=client,server --parallel=2",
+    "start:prod": "npm run build && cp apps/server/.env dist/apps/server/ && cd dist/apps/server && node main.js",
     "start:client": "nx serve client",
     "start:server": "nx serve server",
     "build": "nx run-many --target=build --projects=client,server --tuiAutoExit=true",

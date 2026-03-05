@@ -19,16 +19,23 @@ Um die benötigte Infrastruktur (Datenbank / Keycloak) zu starten (Docker muss i
 docker compose --profile app up
 ```
 
-Um den Angular Dev-Server (Client) zu starten, benutze:
+Um den NestJS Server (Port 3000) im Produktivmodus (mit integriertem Client) zu starten (Docker Compose muss laufen), benutze:
 
 ```sh
-npm run start:client
+npm run start:prod
 ```
 
-Um den NestJS Dev-Server (Server) zu starten, benutze:
+
+Um den NestJS Dev-Server (Server / Port 3000) zu starten (Docker Compose muss laufen), benutze:
 
 ```sh
 npm run start:server
+```
+
+Um den Angular Dev-Server (Client / Port 4200) zu starten (Server muss laufen), benutze:
+
+```sh
+npm run start:client
 ```
 
 Um das ganze Projekt zu linten, benutze:
@@ -36,7 +43,6 @@ Um das ganze Projekt zu linten, benutze:
 ```sh
 npm run lint
 ```
-
 
 Um die Unit-Tests für das ganze Projekt auszuführen, benutze:
 
