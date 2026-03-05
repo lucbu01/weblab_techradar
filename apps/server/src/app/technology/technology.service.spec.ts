@@ -3,10 +3,11 @@ import { TechnologyService } from './technology.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Technology } from './technology.schema';
 import { NotFoundException } from '@nestjs/common';
+import { UpdateTechnology } from '@techradar/libs';
 
 describe('TechnologyService', () => {
   let service: TechnologyService;
-  let model: any;
+  let model;
 
   const mockTechnology = {
     _id: '60d5ecb3e39542001f3f4c6a',
@@ -59,7 +60,12 @@ describe('TechnologyService', () => {
   describe('findTechnologiesByPublished', () => {
     it('should return only published technologies', async () => {
       model.exec.mockResolvedValue([mockTechnology]);
-      const result = await service.findTechnologiesByPublished(true);
+      const result = await service.findTechnologies(
+        undefined,
+        undefined,
+        undefined,
+        true,
+      );
       expect(result).toEqual([mockTechnology]);
       expect(model.find).toHaveBeenCalledWith({ published: true });
     });
@@ -76,7 +82,7 @@ describe('TechnologyService', () => {
 
   describe('createTechnology', () => {
     it('should create a new technology', async () => {
-      const dto: any = {
+      const dto = {
         name: 'New Tech',
         published: false,
         category: 'TOOLS',
@@ -85,7 +91,7 @@ describe('TechnologyService', () => {
 
       mockTechnology.save.mockResolvedValue({ ...dto, _id: 'new-id' });
 
-      const result = await service.createTechnology(dto);
+      const result = await service.createTechnology(dto as Technology);
 
       expect(result._id).toBe('new-id');
       expect(mockTechnology.save).toHaveBeenCalled();
@@ -95,9 +101,9 @@ describe('TechnologyService', () => {
   describe('updateMasterData', () => {
     it('should update and return the technology', async () => {
       model.exec.mockResolvedValue(mockTechnology);
-      const dto = {
+      const dto: UpdateTechnology = {
         name: 'Updated',
-        category: 'PLATFORMS' as any,
+        category: 'PLATFORMS',
         description: 'New desc',
       };
 
@@ -109,9 +115,9 @@ describe('TechnologyService', () => {
 
     it('should throw NotFoundException if technology not found', async () => {
       model.exec.mockResolvedValue(null);
-      await expect(service.updateMasterData('123', {} as any)).rejects.toThrow(
-        NotFoundException,
-      );
+      await expect(
+        service.updateMasterData('123', {} as UpdateTechnology),
+      ).rejects.toThrow(NotFoundException);
     });
   });
 

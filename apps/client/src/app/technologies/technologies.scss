@@ -1,0 +1,16 @@
+.create-button {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+table {
+  max-width: 100%;
+  overflow-x: scroll;
+}

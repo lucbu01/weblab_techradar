@@ -73,12 +73,15 @@ export class Viewer implements OnInit, OnDestroy {
 
   async addTechnology() {
     const c = await import('../technology-edit/technology-edit');
-    this.dialog.open(c.TechnologyEdit, {
-      data: { mode: 'create' },
-      width: '600px',
-      maxWidth: 600,
-      restoreFocus: false,
-    });
+    this.dialog
+      .open(c.TechnologyEdit, {
+        data: { mode: 'create' },
+        width: '600px',
+        maxWidth: 600,
+        restoreFocus: false,
+      })
+      .afterClosed()
+      .subscribe(() => this.loadTechnologies());
   }
 
   ngOnDestroy() {

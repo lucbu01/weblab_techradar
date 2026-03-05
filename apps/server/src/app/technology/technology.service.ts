@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Technology, TechnologyDocument } from './technology.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, QueryFilter } from 'mongoose';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { UpsertTechnologyClassificationDto } from './dto/upsert-technology-classification.dto';
 import { PutTechnologyPublicationDto } from './dto/put-technology-publication.dto';
@@ -12,14 +12,31 @@ export class TechnologyService {
     @InjectModel(Technology.name) private technologyModel: Model<Technology>,
   ) {}
 
-  async findTechnologiesByPublished(
-    published: boolean,
+  async findTechnologies(
+    name?: string,
+    category?: string | string[],
+    ring?: string | string[],
+    published?: boolean,
   ): Promise<TechnologyDocument[]> {
-    return this.technologyModel.find({ published }).exec();
-  }
-
-  async findTechnologies(): Promise<TechnologyDocument[]> {
-    return this.technologyModel.find().exec();
+    const filter: QueryFilter<TechnologyDocument> = {};
+    if (published !== undefined) {
+      filter.published = published;
+    }
+    if (name && name.trim().length > 0) {
+      filter.name = {
+        $regex: name.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+        $options: 'i',
+      };
+    }
+    if (category) {
+      filter.category = {
+        $in: Array.isArray(category) ? category : [category],
+      };
+    }
+    if (ring) {
+      filter.ring = { $in: Array.isArray(ring) ? ring : [ring] };
+    }
+    return this.technologyModel.find(filter).exec();
   }
 
   async getTechnologyById(id: string): Promise<TechnologyDocument> {

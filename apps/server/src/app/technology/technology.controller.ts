@@ -59,12 +59,17 @@ export class TechnologyController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async findTechnologies(
+    @Query('name') name?: string,
+    @Query('category') category?: string | string[],
+    @Query('ring') ring?: string | string[],
     @Query('published') published?: boolean,
   ): Promise<Technology[]> {
-    const technologies =
-      published === undefined
-        ? await this.technologyService.findTechnologies()
-        : await this.technologyService.findTechnologiesByPublished(published);
+    const technologies = await this.technologyService.findTechnologies(
+      name,
+      category,
+      ring,
+      published,
+    );
     return technologies.map((t) => this.map(t));
   }
 

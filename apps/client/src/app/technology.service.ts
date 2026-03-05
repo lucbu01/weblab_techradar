@@ -15,10 +15,29 @@ export class TechnologyService {
   private http = inject(HttpClient);
   private apiUrl = '/api/technologies';
 
-  getTechnologies(published?: boolean): Observable<Technology[]> {
-    const params: { published?: boolean } = {};
-    if (published !== undefined) {
+  getTechnologies(
+    published?: boolean,
+    name?: string,
+    category?: string | string[],
+    ring?: string | string[],
+  ): Observable<Technology[]> {
+    const params: {
+      published?: boolean;
+      name?: string;
+      category?: string | string[];
+      ring?: string | string[];
+    } = {};
+    if (published !== undefined && published !== null) {
       params.published = published;
+    }
+    if (name) {
+      params.name = name;
+    }
+    if (category) {
+      params.category = category;
+    }
+    if (ring) {
+      params.ring = ring;
     }
     return this.http.get<Technology[]>(this.apiUrl, { params });
   }

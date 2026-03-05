@@ -24,7 +24,6 @@ describe('TechnologyController', () => {
   beforeEach(async () => {
     technologyService = {
       findTechnologies: jest.fn(),
-      findTechnologiesByPublished: jest.fn(),
       getTechnologyById: jest.fn(),
       createTechnology: jest.fn(),
       updateMasterData: jest.fn(),
@@ -55,9 +54,9 @@ describe('TechnologyController', () => {
 
   describe('findTechnologies', () => {
     it('should return technologies from service', async () => {
-      technologyService.findTechnologies.mockResolvedValue([
-        mockTechnology as any,
-      ]);
+      technologyService.findTechnologies.mockResolvedValue(
+        Promise.resolve([mockTechnology as any]),
+      );
 
       const result = await controller.findTechnologies();
 
@@ -67,28 +66,31 @@ describe('TechnologyController', () => {
     });
 
     it('should filter by published when query param is provided', async () => {
-      technologyService.findTechnologiesByPublished.mockResolvedValue([
-        mockTechnology as any,
-      ]);
+      technologyService.findTechnologies.mockResolvedValue(
+        Promise.resolve([mockTechnology as any]),
+      );
 
-      const result = await controller.findTechnologies(true);
+      await controller.findTechnologies(undefined, undefined, undefined, true);
 
-      expect(
-        technologyService.findTechnologiesByPublished,
-      ).toHaveBeenCalledWith(true);
+      expect(technologyService.findTechnologies).toHaveBeenCalledWith(
+        undefined,
+        undefined,
+        undefined,
+        true,
+      );
     });
   });
 
   describe('getTechnologyById', () => {
     it('should return technology if found', async () => {
       technologyService.getTechnologyById.mockResolvedValue(
-        mockTechnology as any,
+        Promise.resolve(mockTechnology as any),
       );
       const res = {
         status: jest.fn().mockReturnThis(),
         json: jest.fn().mockReturnThis(),
         send: jest.fn().mockReturnThis(),
-      } as any as Response;
+      } as unknown as Response;
 
       await controller.getTechnologyById('123', res);
 
@@ -101,7 +103,7 @@ describe('TechnologyController', () => {
       const res = {
         status: jest.fn().mockReturnThis(),
         send: jest.fn().mockReturnThis(),
-      } as any as Response;
+      } as unknown as Response;
 
       await controller.getTechnologyById('123', res);
 
