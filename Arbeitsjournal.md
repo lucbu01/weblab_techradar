@@ -85,5 +85,12 @@ Die erste Version vom Technologieradar Viewer wurde erstellt. Die Verlinkung zur
 
 Ein Detail-Viewer in Form eines Dialogs wurde erstellt. Der Server kann jetzt den Client serven. Bei jedem Push auf Main werden die Tests und das Linting ausgeführt und ein Docker-Image der Applikation auf Dockerhub veröffentlicht.
 
+## Mittwoch, 4. März 2026
+- Start: 19:30 Uhr
+- Ende: 01:30 Uhr
+- Aufwand: 6h
+
+Technologien können nun auch im Frontend erstellt und bearbetet weren. Ausserdem gibt es eine Admin-View, wo man die Technologien suchen kann, um sie zu bearbeiten oder zu löschen.
+
 ## Zusammenfassung
-Aufwand insgesamt: 41h
+Aufwand insgesamt: 47h
