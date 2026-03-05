@@ -3,15 +3,17 @@ import { Technologies } from './technologies';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { TechnologyService } from '../technology.service';
+import { TechnologyApi } from '../technology-api';
 import { of } from 'rxjs';
 
 import { vi } from 'vitest';
+import { Auth } from '../auth/auth';
 
 describe('Technologies', () => {
   let component: Technologies;
   let fixture: ComponentFixture<Technologies>;
-  let technologyService: TechnologyService;
+  let technologyService: TechnologyApi;
+  let authMock;
 
   const mockTechnologies = [
     { id: '1', name: 'Tech 1', category: 'LANGS_FRAMEWORKS', ring: 'ADOPT' },
@@ -19,6 +21,9 @@ describe('Technologies', () => {
   ];
 
   beforeEach(async () => {
+    authMock = {
+      getUserInfo: vi.fn().mockReturnValue(of({ appRoles: [] })),
+    };
     await TestBed.configureTestingModule({
       imports: [Technologies],
       providers: [
@@ -31,18 +36,19 @@ describe('Technologies', () => {
           },
         },
         {
-          provide: TechnologyService,
+          provide: TechnologyApi,
           useValue: {
             getTechnologies: vi.fn().mockReturnValue(of(mockTechnologies)),
             deleteTechnology: vi.fn().mockReturnValue(of(null)),
           },
         },
+        { provide: Auth, useValue: authMock },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Technologies);
     component = fixture.componentInstance;
-    technologyService = TestBed.inject(TechnologyService);
+    technologyService = TestBed.inject(TechnologyApi);
     await fixture.whenStable();
   });
 

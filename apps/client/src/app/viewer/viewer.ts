@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { TechnologyService } from '../technology.service';
+import { TechnologyApi } from '../technology-api';
 import {
   Technology,
   TechnologyCategory,
@@ -39,7 +39,7 @@ import { MatFabButton } from '@angular/material/button';
 })
 export class Viewer implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
-  private technologyService = inject(TechnologyService);
+  private technologyService = inject(TechnologyApi);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private dialog = inject(MatDialog);

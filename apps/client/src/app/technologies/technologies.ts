@@ -1,78 +1,52 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
-import { MatOption } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
-  MatTable,
-} from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatHeaderRowDef, MatTableModule } from '@angular/material/table';
 import { Technology } from '@techradar/libs';
-import { TechnologyService } from '../technology.service';
+import { TechnologyApi } from '../technology-api';
 import { Category } from '../chips/category';
 import { Ring } from '../chips/ring';
-import { MatFabButton, MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatTooltip } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
-import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import type { EditMode } from '../technology-edit/technology-edit';
-import { MatChip } from '@angular/material/chips';
+import { MatChipsModule } from '@angular/material/chips';
 import { CdkFixedSizeVirtualScroll } from '@angular/cdk/scrolling';
 import { debounceTime } from 'rxjs';
-import {
-  MatButtonToggle,
-  MatButtonToggleGroup,
-} from '@angular/material/button-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { Auth } from '../auth/auth';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'techradar-technologies',
   imports: [
     ReactiveFormsModule,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    MatOption,
-    MatSelect,
-    MatTable,
-    MatHeaderCell,
-    MatCell,
-    MatCellDef,
-    MatHeaderCellDef,
-    MatColumnDef,
-    MatHeaderRow,
-    MatRowDef,
-    MatRow,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatButtonToggleModule,
+    MatTableModule,
     Category,
     Ring,
     MatHeaderRowDef,
-    MatFabButton,
-    MatIcon,
-    MatTooltip,
-    MatIconButton,
-    MatMenu,
-    MatMenuTrigger,
-    MatMenuItem,
-    MatChip,
+    MatIconModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatChipsModule,
     CdkFixedSizeVirtualScroll,
-    MatButtonToggleGroup,
-    MatButtonToggle,
+    MatButtonModule,
   ],
   templateUrl: './technologies.html',
   styleUrl: './technologies.scss',
 })
 export class Technologies implements OnInit {
-  private dialog = inject(MatDialog);
-  private formBuilder = inject(FormBuilder);
-  protected searchForm = this.formBuilder.group({
+  private readonly dialog = inject(MatDialog);
+  private readonly formBuilder = inject(FormBuilder);
+  protected readonly searchForm = this.formBuilder.group({
     name: [''],
     category: [],
     ring: [],
@@ -80,7 +54,10 @@ export class Technologies implements OnInit {
   });
 
   protected readonly technologies = signal<Technology[]>([]);
-  private technologyService = inject(TechnologyService);
+  private readonly technologyService = inject(TechnologyApi);
+  private readonly auth = inject(Auth);
+  protected readonly user = toSignal(this.auth.getUserInfo());
+  protected readonly filter = signal(true);
 
   protected readonly displayedColumns: string[] = [
     'name',

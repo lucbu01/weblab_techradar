@@ -3,7 +3,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { TechnologyService } from './technology.service';
+import { TechnologyApi } from './technology-api';
 import {
   CreateTechnology,
   Technology,
@@ -11,7 +11,7 @@ import {
 } from '@techradar/libs';
 
 describe('TechnologyService', () => {
-  let service: TechnologyService;
+  let service: TechnologyApi;
   let httpMock: HttpTestingController;
   const apiUrl = '/api/technologies';
 
@@ -43,9 +43,9 @@ describe('TechnologyService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [TechnologyService],
+      providers: [TechnologyApi],
     });
-    service = TestBed.inject(TechnologyService);
+    service = TestBed.inject(TechnologyApi);
     httpMock = TestBed.inject(HttpTestingController);
   });
 

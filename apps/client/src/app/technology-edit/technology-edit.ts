@@ -7,7 +7,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { TechnologyService } from '../technology.service';
+import { TechnologyApi } from '../technology-api';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import {
@@ -66,7 +66,7 @@ export class TechnologyEdit {
   protected data: { id?: string; mode: EditMode } = inject(MAT_DIALOG_DATA);
   private dialogRef = inject(MatDialogRef<TechnologyEdit>);
   private snackBar = inject(MatSnackBar);
-  private technologyService = inject(TechnologyService);
+  private technologyService = inject(TechnologyApi);
   private formBuilder = inject(FormBuilder);
   protected technology = toSignal(
     this.data.id

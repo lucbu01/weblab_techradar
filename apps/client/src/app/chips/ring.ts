@@ -1,9 +1,9 @@
 import { Component, computed, input } from '@angular/core';
-import { MatChip } from '@angular/material/chips';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'techradar-ring',
-  imports: [MatChip],
+  imports: [MatChipsModule],
   templateUrl: './ring.html',
   styleUrl: './ring.scss',
 })

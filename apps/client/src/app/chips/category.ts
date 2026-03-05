@@ -1,9 +1,9 @@
 import { Component, computed, input } from '@angular/core';
-import { MatChip } from '@angular/material/chips';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'techradar-category',
-  imports: [MatChip],
+  imports: [MatChipsModule],
   templateUrl: './category.html',
   styleUrl: './category.scss',
 })

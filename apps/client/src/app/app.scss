@@ -20,3 +20,18 @@
 main {
   padding: 16px;
 }
+
+mat-sidenav {
+  width: auto;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+}
+
+.sidenav-container {
+  height: calc(100% - 64px);
+}
+
+@media screen and (max-width: 599px) {
+  .sidenav-container {
+    height: calc(100% - 56px);
+  }
+}

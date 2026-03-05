@@ -58,7 +58,7 @@ describe('TechnologyController', () => {
         Promise.resolve([mockTechnology as any]),
       );
 
-      const result = await controller.findTechnologies();
+      const result = await controller.findTechnologies({} as any);
 
       expect(result).toHaveLength(1);
       expect(result[0].name).toBe('TypeScript');
@@ -70,7 +70,13 @@ describe('TechnologyController', () => {
         Promise.resolve([mockTechnology as any]),
       );
 
-      await controller.findTechnologies(undefined, undefined, undefined, true);
+      await controller.findTechnologies(
+        {} as any,
+        undefined,
+        undefined,
+        undefined,
+        true,
+      );
 
       expect(technologyService.findTechnologies).toHaveBeenCalledWith(
         undefined,

@@ -14,7 +14,7 @@ export const appRoutes: Route[] = [
     loadComponent: () =>
       import('./technologies/technologies').then((m) => m.Technologies),
     canActivate: [Auth],
-    data: { roles: ['CTO', 'TECHLEAD'] },
+    data: { roles: ['CTO', 'TECHLEAD', 'EMPLOYEE'] },
   },
   { path: '**', redirectTo: '' },
 ];

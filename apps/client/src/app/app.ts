@@ -2,25 +2,28 @@ import { Component, computed, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Auth } from './auth/auth';
-import { MatToolbar } from '@angular/material/toolbar';
-import { MatButton, MatIconButton } from '@angular/material/button';
-import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
-import { MatIcon } from '@angular/material/icon';
-import { MatDivider } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Env } from './env/env';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   imports: [
     RouterModule,
-    MatToolbar,
-    MatButton,
-    MatIconButton,
-    MatMenuTrigger,
-    MatIcon,
-    MatMenu,
-    MatMenuItem,
-    MatDivider,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatDividerModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   selector: 'techradar-root',
   templateUrl: './app.html',
@@ -30,6 +33,7 @@ export class App {
   protected auth = inject(Auth);
   protected http = inject(HttpClient);
   protected env = inject(Env);
+  protected breakpointObserver = inject(BreakpointObserver);
   protected environment = toSignal(this.env.environmentLoaded);
   protected manageUserUrl = computed(() => {
     return (
@@ -38,6 +42,15 @@ export class App {
     );
   });
   protected readonly user = toSignal(this.auth.getUserInfo());
+  protected hideSidebar = toSignal(
+    this.breakpointObserver
+      .observe([
+        Breakpoints.Handset,
+        Breakpoints.TabletPortrait,
+        Breakpoints.WebPortrait,
+      ])
+      .pipe(map((result) => result.matches)),
+  );
 
   logoff() {
     this.auth.logoff();

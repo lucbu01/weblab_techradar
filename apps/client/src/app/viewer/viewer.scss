@@ -7,6 +7,7 @@
   position: fixed;
   bottom: 16px;
   right: 16px;
+  z-index: 2;
 }
 
 .radar-layout {
@@ -17,7 +18,7 @@
 
 .radar-visualization {
   flex: 1;
-  min-width: 500px;
+  min-width: 600px;
   max-width: 850px;
   background-color: var(--mat-sys-surface-container);
 }
@@ -110,4 +111,23 @@ circle {
   height: 600px;
   gap: 16px;
   color: var(--mat-sys-on-surface-variant);
+}
+
+@media screen and (max-width: 632px) {
+  .radar-visualization,
+  .radar-sidebar {
+    margin-left: -16px;
+    margin-right: -16px;
+    min-width: calc(100% - 16px);
+  }
+
+  .radar-sidebar {
+    flex-wrap: wrap;
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
+  .radar-visualization mat-card-content {
+    padding: 0 !important;
+  }
 }

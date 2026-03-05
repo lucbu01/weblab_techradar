@@ -5,7 +5,7 @@ import { Auth } from '../auth/auth';
 import { of } from 'rxjs';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { TechnologyService } from '../technology.service';
+import { TechnologyApi } from '../technology-api';
 import { vi } from 'vitest';
 
 describe('TechnologyDetail', () => {
@@ -45,7 +45,7 @@ describe('TechnologyDetail', () => {
         provideHttpClientTesting(),
         { provide: MAT_DIALOG_DATA, useValue: { id: '123' } },
         { provide: Auth, useValue: authMock },
-        { provide: TechnologyService, useValue: technologyServiceMock },
+        { provide: TechnologyApi, useValue: technologyServiceMock },
         { provide: MatDialog, useValue: dialogMock },
       ],
     }).compileComponents();

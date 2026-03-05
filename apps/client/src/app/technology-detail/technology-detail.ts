@@ -7,7 +7,7 @@ import {
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { TechnologyService } from '../technology.service';
+import { TechnologyApi } from '../technology-api';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatChip, MatChipSet } from '@angular/material/chips';
 import { MatButton } from '@angular/material/button';
@@ -36,7 +36,7 @@ import { Technology } from '@techradar/libs';
 export class TechnologyDetail implements OnInit {
   private data: { id: string } = inject(MAT_DIALOG_DATA);
   private dialog = inject(MatDialog);
-  private technologyService = inject(TechnologyService);
+  private technologyService = inject(TechnologyApi);
   protected technology = signal<Technology | undefined>(undefined);
   private auth = inject(Auth);
   protected user = toSignal(this.auth.getUserInfo());

@@ -5,7 +5,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { TechnologyService } from '../technology.service';
+import { TechnologyApi } from '../technology-api';
 import { vi } from 'vitest';
 
 describe('Viewer', () => {
@@ -50,7 +50,7 @@ describe('Viewer', () => {
           useValue: dialogMock,
         },
         {
-          provide: TechnologyService,
+          provide: TechnologyApi,
           useValue: technologyServiceMock,
         },
       ],

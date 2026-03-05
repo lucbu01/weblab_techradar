@@ -59,16 +59,20 @@ export class TechnologyController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async findTechnologies(
+    @Req() req: Request,
     @Query('name') name?: string,
     @Query('category') category?: string | string[],
     @Query('ring') ring?: string | string[],
     @Query('published') published?: boolean,
   ): Promise<Technology[]> {
+    const canViewUnpublished = req['user']?.roles?.some?.((r) =>
+      ['CTO', 'TECHLEAD'].includes(r),
+    );
     const technologies = await this.technologyService.findTechnologies(
       name,
       category,
       ring,
-      published,
+      canViewUnpublished ? published : true,
     );
     return technologies.map((t) => this.map(t));
   }

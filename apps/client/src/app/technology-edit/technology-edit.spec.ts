@@ -3,7 +3,7 @@ import { TechnologyEdit } from './technology-edit';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TechnologyService } from '../technology.service';
+import { TechnologyApi } from '../technology-api';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { vi } from 'vitest';
@@ -47,7 +47,7 @@ describe('TechnologyEdit', () => {
         provideHttpClientTesting(),
         { provide: MAT_DIALOG_DATA, useValue: { id: '123', mode: 'edit' } },
         { provide: MatDialogRef, useValue: dialogRefMock },
-        { provide: TechnologyService, useValue: technologyServiceMock },
+        { provide: TechnologyApi, useValue: technologyServiceMock },
         { provide: MatSnackBar, useValue: snackBarMock },
       ],
     }).compileComponents();
@@ -85,7 +85,7 @@ describe('TechnologyEdit', () => {
         provideHttpClientTesting(),
         { provide: MAT_DIALOG_DATA, useValue: { mode: 'create' } },
         { provide: MatDialogRef, useValue: dialogRefMock },
-        { provide: TechnologyService, useValue: technologyServiceMock },
+        { provide: TechnologyApi, useValue: technologyServiceMock },
         { provide: MatSnackBar, useValue: snackBarMock },
       ],
     }).compileComponents();

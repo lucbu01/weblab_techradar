@@ -1,13 +1,10 @@
 <mat-toolbar color="primary">
-  <span>Technologie-Radar</span>
+  @if( user() !== undefined) {
+  <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon></button
+  >}
+  <span>Technologieradar</span>
   <span class="spacer"></span>
-  @if (user(); as user) { @if (user.appRoles.length > 0) {
-  <button mat-button routerLink="/viewer">Technologieradar</button>
-  } @if(user.appRoles.includes('CTO') || user.appRoles.includes('TECHLEAD')) {
-  <button mat-button routerLink="/technologies">Technologien verwalten</button>
-  } @if(user.appRoles.includes('CTO') ) {
-  <a mat-button [href]="manageUserUrl()" target="_blank">Benutzer verwalten</a>
-  } }
   <button
     mat-icon-button
     [matMenuTriggerFor]="userMenu"
@@ -16,6 +13,7 @@
   >
     <mat-icon>account_circle</mat-icon>
   </button>
+
   <mat-menu #userMenu="matMenu">
     @if (user(); as user) {
     <div class="menu-info-block" role="presentation">
@@ -25,15 +23,59 @@
     </div>
     <mat-divider></mat-divider>
     <button mat-menu-item (click)="logoff()">
-      <mat-icon>logout</mat-icon>Ausloggen
+      <mat-icon>logout</mat-icon>
+      <span>Ausloggen</span>
     </button>
     } @else {
     <button mat-menu-item (click)="login()">
-      <mat-icon>login</mat-icon>Anmelden
+      <mat-icon>login</mat-icon>
+      <span>Anmelden</span>
     </button>
     }
   </mat-menu>
 </mat-toolbar>
-<main>
-  <router-outlet></router-outlet>
-</main>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #sidenav
+    [mode]="hideSidebar() || user() === undefined ? 'over' : 'side'"
+    [opened]="!hideSidebar()  && user() !== undefined"
+    [disableClose]="!hideSidebar() && user() !== undefined"
+  >
+    <mat-nav-list>
+      @if (user(); as user) { @if (user.appRoles.length > 0) {
+      <a
+        mat-list-item
+        routerLink="/viewer"
+        (click)="hideSidebar() && sidenav.close()"
+      >
+        <mat-icon matListItemIcon>radar</mat-icon>
+        <span matListItemTitle>Technologieradar</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/technologies"
+        (click)="hideSidebar() && sidenav.close()"
+      >
+        <mat-icon matListItemIcon>table</mat-icon>
+        <span matListItemTitle>Technologien</span>
+      </a>
+      } @if(user.appRoles.includes('CTO') ) {
+      <a
+        mat-list-item
+        [href]="manageUserUrl()"
+        target="_blank"
+        (click)="hideSidebar() ? sidenav.close() : null"
+      >
+        <mat-icon matListItemIcon>manage_user</mat-icon
+        ><span matListItemTitle> Benutzer verwalten</span></a
+      >
+      } }
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
