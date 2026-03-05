@@ -121,6 +121,44 @@ describe('TechnologyService', () => {
     });
   });
 
+  describe('upsertClassification', () => {
+    it('should update classification and return the technology', async () => {
+      model.exec.mockResolvedValue(mockTechnology);
+      const dto = {
+        ring: 'TRIAL' as const,
+        classificationDescription: 'Testing description',
+      };
+
+      const result = await service.upsertClassification('123', dto);
+
+      expect(result).toEqual(mockTechnology);
+      expect(model.findByIdAndUpdate).toHaveBeenCalled();
+    });
+  });
+
+  describe('putPublication', () => {
+    it('should publish the technology', async () => {
+      const mockDoc = {
+        ...mockTechnology,
+        published: false,
+        save: jest
+          .fn()
+          .mockResolvedValue({ ...mockTechnology, published: true }),
+      };
+      model.exec.mockResolvedValue(mockDoc);
+
+      const dto = {
+        ring: 'ADOPT' as const,
+        classificationDescription: 'Ready for adoption',
+      };
+
+      const result = await service.putPublication('123', dto);
+
+      expect(result.published).toBe(true);
+      expect(mockDoc.save).toHaveBeenCalled();
+    });
+  });
+
   describe('deleteTechnology', () => {
     it('should delete the technology', async () => {
       model.exec.mockResolvedValue(mockTechnology);
