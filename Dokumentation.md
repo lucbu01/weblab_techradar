@@ -8,8 +8,9 @@ Das Technologie-Radar dient als Software-as-a-Service (SaaS) Tool zur Verwaltung
 - **Technologie-Radar-Viewer:** Ermöglicht allen Mitarbeitern die strukturierte Einsicht in die publizierten Technologien.
 
 - **Rollen:** 
-  - *CTO / Tech-Lead:* Berechtigt zur Administration (Login-Pflicht).
-  - *Mitarbeiter:* Berechtigt zum Viewer (Login-Pflicht gemäß Story 7).
+  - *CTO* (CTO): Berechtigt zur Administration der Technologien über die App und zum Verwalten der Nutzer im Keycloak (Login-Pflicht).
+  - *Tech-Lead* (TECHLEAD): Berechtigt zur Administration der Technologien (Login-Pflicht).
+  - *Mitarbeiter* (EMPLOYEE): Berechtigt zum Viewer (Login-Pflicht gemäß Story 7).
 - **Kernfunktionen:** Technologien erfassen (Entwürfe), publizieren, kategorisieren (Techniques, Tools, Platforms, Languages & Frameworks) und in Ringe einordnen (Adopt, Trial, Assess, Hold).
 
 ### Technischer Kontext
@@ -35,7 +36,7 @@ graph TD
 ### Ebene 1: Gesamtsystem
 - **Client App (Frontend):** Angular-Anwendung mit getrennten Bereichen für **Viewer** (öffentlich für Mitarbeiter) und **Administration** (geschützt für CTO/Tech-Lead).
 - **Server App (Backend):** NestJS-Server für Business-Logik, Validierung der Pflichtfelder (Name, Kategorie, Ring, etc.) und Datenpersistenz.
-- **Keycloak (IAM):** Zentraler Identity Provider für die Rollen-basierte Anmeldung (`CTO`, `Tech-Lead`, `User`).
+- **Keycloak (IAM):** Zentraler Identity Provider für die Rollen-basierte Anmeldung (`CTO`, `Tech-Lead`, `Mitarbeiter`).
 - **MongoDB:** Speichert Technologien inkl. Metadaten (Erfassungs-, Publikations- und Änderungsdatum).
 
 ```mermaid
@@ -107,17 +108,50 @@ sequenceDiagram
 ```
 
 ### Technologie erfassen (Beispiel)
-1. User sendet POST-Request an `/api/technology`.
-2. `AdminLoginAuditInterceptor` registriert ggf. den Zugriff.
+1. User sendet (via Client) POST-Request an `/api/technology`.
+2. `AdminLoginAuditInterceptor` registriert ggf. den Zugriff (Beim 1. Aufruf mit diesem Token / einmal pro Login).
 3. `TechnologyController` validiert die Eingabe.
 4. `TechnologyService` speichert die Daten via Mongoose in MongoDB.
+
+```mermaid
+sequenceDiagram
+    participant Client as Frontend (Angular)
+    participant Interceptor as AdminLoginAuditInterceptor
+    participant Ctrl as TechnologyController
+    participant Service as TechnologyService
+    participant DB as MongoDB
+    
+    Client->>Interceptor: POST /api/technology (+JWT)
+    activate Interceptor
+    Note over Interceptor: Prüfe Login-Audit Status
+    alt Erster Admin-Zugriff mit Token
+        Interceptor->>DB: Speichere Login-Audit
+    end
+    Interceptor->>Ctrl: Request weiterleiten
+    deactivate Interceptor
+    
+    activate Ctrl
+    Note over Ctrl: Validierung (DTO)
+    Ctrl->>Service: createTechnology(data)
+    deactivate Ctrl
+    
+    activate Service
+    Service->>DB: Mongoose save()
+    DB-->>Service: Gespeicherte Daten
+    Service-->>Ctrl: Resultat
+    deactivate Service
+    
+    activate Ctrl
+    Ctrl-->>Client: 201 Created
+    deactivate Ctrl
+```
 
 ---
 
 ## 7. Verteilungssicht
 
 Das System wird mittels Docker containerisiert:
-- **NestJS & Angular:** Das Backend serviert das gebaute Frontend statisch (ServeStaticModule). Beides läuft in einem Container (oder separat je nach Deployment-Szenario).
+- **NestJS & Angular:** Das Backend hostet das gebaute Frontend statisch (ServeStaticModule). Beides läuft in einem Container (oder separat je nach Deployment-Szenario).
 - **Keycloak:** Läuft in einem separaten Container, unterstützt durch eine PostgreSQL-Instanz.
 - **MongoDB:** Läuft als eigener Datenbank-Container.
 
@@ -144,8 +178,10 @@ graph TD
 
 - **Sicherheit:** 
   - Token-basierte Authentifizierung (OIDC/JWT).
-  - Role-Based Access Control (RBAC): Nur Nutzer mit Rollen `CTO` oder `Tech-Lead` haben Zugriff auf administrative API-Endpunkte.
-- **Logging/Audit:** Gemäß Anforderung werden sämtliche Anmeldungen an der Administration aufgezeichnet (`AdminLoginAuditInterceptor`).
+  - Role-Based Access Control (RBAC): Nur Nutzer mit Rollen `CTO` oder `Tech-Lead` haben Zugriff auf administrative API-Endpunkte. Die Rolle `Mitarbeiter` hat nur Leserechte auf die Technologien.
+- **Logging/Audit:**
+  - Gemäß Anforderung werden sämtliche Anmeldungen an der Administration (Rollen 'CTO' oder 'Tech-Lead') aufgezeichnet (`AdminLoginAuditInterceptor`).
+  - 
 - **Datenmodellierung:** 
   - Technologien unterstützen Entwurfs- und Publikationsstatus.
   - Automatisches Tracking von Zeitstempeln (Erstellungsdatum, Publikationsdatum, Änderungsdatum).
@@ -167,8 +203,9 @@ graph TD
 ## 10. Qualitätsanforderungen
 
 - **Benutzerfreundlichkeit:** 
-  - Intuitive Visualisierung des Radars (tabellarisch/strukturiert).
-  - **Mobile Optimierung:** Voll funktionsfähig auf Smartphones und Tablets.
+  - Intuitive Visualisierung der Technologien (tabellarisch/als Radar).
+  - Mobile Optimierung: Voll funktionsfähig auf Smartphones und Tablets.
+  - Features, welche für eine Rolle nicht verfügbar sind, werden nicht angezeigt.
 - **Sicherheit:** 
   - Schutz der Administration durch strikte Rollenprüfung.
   - Schutz der Datenanzeige durch Authentifizierung.
