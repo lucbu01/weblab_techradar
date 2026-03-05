@@ -24,10 +24,15 @@ Das System ist als Webapplikation konzipiert und besteht aus folgenden Komponent
 graph TD
     User([Benutzer]) <--> Frontend[Frontend: Angular]
     Frontend <--> Backend[Backend: NestJS]
-    Backend <--> DB[(Datenbank: MongoDB)]
+    Backend <--> MongoDB[(Datenbank: MongoDB)]
     Frontend <--> Keycloak[Auth: Keycloak]
     Backend <--> Keycloak
+    Keycloak <--> Postgres[(Datenbank: Postgres)]
 ```
+
+### Schnittstellen & API-Dokumentation
+Das Backend stellt eine REST-API zur Verfügung. Zur interaktiven Erkundung und als technischer Vertrag zwischen Frontend und Backend wird Swagger/OpenAPI genutzt.
+Die vollständige API-Dokumentation ist zur Laufzeit der lokalen Entwicklungsumgebung unter http://localhost:3000/api/docs erreichbar.
 
 ---
 
@@ -50,12 +55,15 @@ graph LR
     subgraph External / Data
         Keycloak[Keycloak]
         MongoDB[(MongoDB)]
+        Postgres[(Postgres)]
     end
     
+    Server -. "liefert" .-> Client
     Client -- "REST API (JWT)" --> ServerApp
     Client -- "OIDC" --> Keycloak
     ServerApp -- "Mongoose" --> MongoDB
     ServerApp -- "Auth Check" --> Keycloak
+    Keycloak --> Postgres
 ```
 
 ### Ebene 2: Server (Bausteine)
@@ -151,25 +159,31 @@ sequenceDiagram
 ## 7. Verteilungssicht
 
 Das System wird mittels Docker containerisiert:
-- **NestJS & Angular:** Das Backend hostet das gebaute Frontend statisch (ServeStaticModule). Beides läuft in einem Container (oder separat je nach Deployment-Szenario).
+- **NestJS & Angular:** Das Backend hostet das gebaute Frontend statisch (ServeStaticModule). Beides läuft in einem Container oder wird direkt mit Node ausgeführt.
 - **Keycloak:** Läuft in einem separaten Container, unterstützt durch eine PostgreSQL-Instanz.
 - **MongoDB:** Läuft als eigener Datenbank-Container.
+- **Wichtig:**
+  - Die App spricht Keycloak **nicht** über den internen Docker-DNS-Namen an, sondern über den **extern erreichbaren Keycloak-Hostnamen** (z. B. per Ingress/Reverse Proxy).
+  - Dies ist nur ein Beispiel des Deployments, die Systeme können auch anders (nicht über Docker) deployt werden.
 
 ```mermaid
 graph TD
-    subgraph "Docker Network"
-        AppCont[Container: App / NestJS + Angular]
+    subgraph "Docker Network (intern)"
         KCCont[Container: Keycloak]
         PGCont[Container: Postgres DB]
         MongoCont[Container: MongoDB]
-        
-        AppCont --- KCCont
-        KCCont --- PGCont
-        AppCont --- MongoCont
+
+        KCCont --> PGCont
     end
-    
-    Internet((Internet)) --- AppCont
-    Internet --- KCCont
+
+    AppCont[App / NestJS + Angular]
+    User([Benutzer / Browser])
+
+    AppCont --> MongoCont
+    User --> AppCont
+    User --> KCCont
+
+    AppCont --> KCCont
 ```
 
 ---
@@ -181,10 +195,31 @@ graph TD
   - Role-Based Access Control (RBAC): Nur Nutzer mit Rollen `CTO` oder `Tech-Lead` haben Zugriff auf administrative API-Endpunkte. Die Rolle `Mitarbeiter` hat nur Leserechte auf die Technologien.
 - **Logging/Audit:**
   - Gemäß Anforderung werden sämtliche Anmeldungen an der Administration (Rollen 'CTO' oder 'Tech-Lead') aufgezeichnet (`AdminLoginAuditInterceptor`).
-  - 
+  - Die Audit-Einträge können in der Datenbank oder über die API `GET /api/audit` (von der Rolle `CTO`) abgefragt werden. Sie werden aber nicht im Client dargestellt.
 - **Datenmodellierung:** 
   - Technologien unterstützen Entwurfs- und Publikationsstatus.
   - Automatisches Tracking von Zeitstempeln (Erstellungsdatum, Publikationsdatum, Änderungsdatum).
+    Das Kern-Datenmodell für Technologien (in MongoDB gespeichert) sieht wie folgt aus:
+
+      ```mermaid
+      erDiagram
+          TECHNOLOGY {
+              objectId id PK
+              string name
+              string description
+              enum category "TECHNIQUES, TOOLS, PLATFORMS, LANGS_FRAMEWORKS"
+              boolean published
+              enum ring "ADOPT, TRIAL, ASSESS, HOLD" optional
+              string classificationDescription optional
+              date createdAt
+              date publishedAt optional
+              date updatedAt
+          }
+      ```
+- **Fehlerbehandlung & Resilienz:**
+  - Globale Fehlererfassung im Backend via NestJS Exception Filters (z. B. für HTTP-Fehler, Validierungsfehler oder DB-Ausfälle).
+  - Im Frontend: HTTP-Interceptor fängt API-Fehler ab und zeigt sie benutzerfreundlich (z. B. via Angular Material SnackBar) an.
+  - Resilienz: Automatische Retries für MongoDB-Verbindungen (via Mongoose-Options) und Graceful Shutdown bei Container-Ausfällen.
 - **Frontend-Architektur:** 
   - Responsive Design für Mobile- und Tablet-Ansicht (SCSS Media Queries).
   - Optimierte Ladezeiten für 4G-Verbindungen.
@@ -194,9 +229,11 @@ graph TD
 ## 9. Architekturentscheidungen
 
 1. **Nx Monorepo:** Zur effizienten Verwaltung von Frontend und Backend in einem Repository.
-2. **NestJS & Angular:** Nutzung von TypeScript über den gesamten Stack hinweg für bessere Wartbarkeit und Typensicherheit.
+2. **NestJS & Angular:** Nutzung von TypeScript über den gesamten Stack hinweg für bessere Wartbarkeit und Typensicherheit. Für NestJS wird Jest und für Angular Vite als Testruntime verwendet.
 3. **OIDC/Keycloak:** Nutzung bewährter Standards für Sicherheit statt Eigenbau.
 4. **MongoDB:** Flexibilität bei der Beschreibung von Technologien (verschiedene Felder je nach Typ).
+5. **ESLint & Prettier:** Standardisierung der Code-Style.
+6. **GitHub Actions:** Automatisierte Builds und Tests bei jedem Commit.
 
 ---
 
