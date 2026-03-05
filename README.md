@@ -16,12 +16,6 @@ Autor: Luca Bucher
 Um die benötigte Infrastruktur (Datenbank / Keycloak) zu starten (Docker muss installiert sein und laufen), benutze:
 
 ```sh
-docker compose up
-```
-
-Um alle Services (inklusive Techradar) zu starten (Docker muss installiert sein und laufen), benutze:
-
-```sh
 docker compose --profile app up
 ```
 

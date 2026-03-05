@@ -18,12 +18,13 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   @if (user()?.appRoles?.includes('CTO') ||
-  user()?.appRoles?.includes('TECHLEAD')) { @if (technology.published) {
-  <button mat-button (click)="openEditDialog('classify')">
-    Einstufung ändern
-  </button>
+  user()?.appRoles?.includes('TECHLEAD')) {
   <button mat-button (click)="openEditDialog('edit')">
     Beschreibung ändern
+  </button>
+  @if (technology.published) {
+  <button mat-button (click)="openEditDialog('classify')">
+    Einstufung ändern
   </button>
   } @else {
   <button mat-button (click)="openEditDialog('publish')">Publizieren</button>

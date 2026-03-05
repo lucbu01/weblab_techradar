@@ -34,7 +34,7 @@
     <div>
       <mat-button-toggle-group formControlName="published">
         <mat-button-toggle [value]="'all'">Alle</mat-button-toggle>
-        <mat-button-toggle [value]="true">Veröffentlicht</mat-button-toggle>
+        <mat-button-toggle [value]="true">Publiziert</mat-button-toggle>
         <mat-button-toggle [value]="false">Entwürfe</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
@@ -80,14 +80,14 @@
             <mat-icon>visibility</mat-icon>
             <span>Anzeigen</span>
           </button>
+          <button mat-menu-item (click)="openEditDialog('edit', element)">
+            <mat-icon>edit</mat-icon>
+            Beschreibung ändern
+          </button>
           @if (element.published) {
           <button mat-menu-item (click)="openEditDialog('classify', element)">
             <mat-icon>category</mat-icon>
             Einstufung ändern
-          </button>
-          <button mat-menu-item (click)="openEditDialog('edit', element)">
-            <mat-icon>edit</mat-icon>
-            Beschreibung ändern
           </button>
           } @else {
           <button mat-menu-item (click)="openEditDialog('publish', element)">
