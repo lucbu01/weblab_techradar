@@ -31,6 +31,23 @@ Autor: Luca Bucher
 2. Docker muss installiert sein.
 3. Packages müssen intalliert sein (`npm install` im Root-Verzeichnis des Projekts).
 
+## Credentials
+Folgende User sind für den lokalen Keycloak aufgesetzt:
+- CTO
+  - Username: cto
+  - Passwort: cto
+  - Rolle: CTO
+- Tech-Lead
+  - Username: techlead
+  - Passwort: techlead
+  - Rolle: TECHLEAD
+- Mitarbeiter
+  - Username: employee
+  - Passwort: employee
+  - Rolle: EMPLOYEE
+
+Das System kann auf live auf [techradar.lucbu.ch](https://techradar.lucbu.ch) ausprobiert werden. Die entsprechenden Credentials sind im Abgabe-File auf Ilias.
+
 ## Tasks ausführen
 
 ### Infrastruktur (Docker Compose)
