@@ -9,7 +9,7 @@
 - [6. Laufzeitsicht](#6-laufzeitsicht)
 - [7. Verteilungssicht](#7-verteilungssicht)
 - [8. Querschnittliche Konzepte](#8-querschnittliche-konzepte)
-- [9. Architekturentscheidungen (ADR)](#9-architekturentscheidungen-adr)
+- [9. Architekturentscheidungen](#9-architekturentscheidungen)
 - [10. Qualitätsanforderungen](#10-qualitätsanforderungen)
 - [11. Risiken und technische Schulden](#11-risiken-und-technische-schulden)
 - [12. Glossar](#12-glossar)
@@ -291,7 +291,7 @@ graph TD
 
 ---
 
-## 9. Architekturentscheidungen (ADR)
+## 9. Architekturentscheidungen
 
 Wichtige architektonische Entscheidungen, die über die Technologieentscheidungen hinausgehen:
 
