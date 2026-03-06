@@ -81,6 +81,42 @@ describe('Viewer', () => {
     expect(tech.x).toBeLessThan(500);
   });
 
+  it('should handle collisions by slightly shifting points', () => {
+    const manyTechs = [
+      { id: '1', name: 'Tech 1', ring: 'ADOPT', category: 'TOOLS' },
+      { id: '2', name: 'Tech 2', ring: 'ADOPT', category: 'TOOLS' },
+      { id: '3', name: 'Tech 3', ring: 'ADOPT', category: 'TOOLS' },
+    ];
+    technologyServiceMock.getTechnologies.mockReturnValue(of(manyTechs));
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    const techs = component.technologies();
+    expect(techs.length).toBe(3);
+
+    // Check that points are not identical (collision avoidance)
+    const p1 = { x: techs[0].x, y: techs[0].y };
+    const p2 = { x: techs[1].x, y: techs[1].y };
+    const p3 = { x: techs[2].x, y: techs[2].y };
+
+    expect(p1).not.toEqual(p2);
+    expect(p1).not.toEqual(p3);
+    expect(p2).not.toEqual(p3);
+  });
+
+  it('should set hoveredId on mouseenter and clear on mouseleave', () => {
+    component.hoveredId.set(null);
+    const techId = 'test-id';
+
+    // Simuliere mouseenter (via Methode oder Signal)
+    component.hoveredId.set(techId);
+    expect(component.hoveredId()).toBe(techId);
+    expect(component.hoveredTech()?.id).toBeUndefined(); // Weil techId nicht in technologies ist
+
+    component.hoveredId.set(null);
+    expect(component.hoveredId()).toBeNull();
+  });
+
   it('should open add technology dialog', async () => {
     await component.addTechnology();
     expect(dialogMock.open).toHaveBeenCalled();

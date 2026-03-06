@@ -42,6 +42,7 @@ describe('TechnologyService', () => {
     model.findByIdAndUpdate = jest.fn().mockReturnThis();
     model.findByIdAndDelete = jest.fn().mockReturnThis();
     model.select = jest.fn().mockReturnThis();
+    model.sort = jest.fn().mockReturnThis();
     model.exec = jest.fn();
   });
 
@@ -58,6 +59,39 @@ describe('TechnologyService', () => {
       expect(model.select).toHaveBeenCalledWith(
         '_id name published category ring',
       );
+    });
+
+    it('should filter by name', async () => {
+      model.exec.mockResolvedValue([mockTechnology]);
+      await service.findTechnologies('TypeScript');
+      expect(model.find).toHaveBeenCalledWith(
+        expect.objectContaining({
+          name: { $regex: 'TypeScript', $options: 'i' },
+        }),
+      );
+    });
+
+    it('should filter by multiple categories', async () => {
+      model.exec.mockResolvedValue([mockTechnology]);
+      await service.findTechnologies(undefined, ['TOOLS', 'PLATFORMS']);
+      expect(model.find).toHaveBeenCalledWith(
+        expect.objectContaining({
+          category: { $in: ['TOOLS', 'PLATFORMS'] },
+        }),
+      );
+    });
+
+    it('should sort technologies', async () => {
+      model.exec.mockResolvedValue([mockTechnology]);
+      await service.findTechnologies(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        'name',
+        'desc',
+      );
+      expect(model.sort).toHaveBeenCalledWith({ name: -1 });
     });
   });
 

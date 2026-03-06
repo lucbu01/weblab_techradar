@@ -98,4 +98,83 @@ describe('TechnologyEdit', () => {
     } as any);
     expect(technologyServiceMock.createTechnology).toHaveBeenCalled();
   });
+
+  it('should validate form in publish mode', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [TechnologyEdit],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: MAT_DIALOG_DATA, useValue: { id: '123', mode: 'publish' } },
+        { provide: MatDialogRef, useValue: dialogRefMock },
+        { provide: TechnologyApi, useValue: technologyServiceMock },
+        { provide: MatSnackBar, useValue: snackBarMock },
+      ],
+    }).compileComponents();
+    fixture = TestBed.createComponent(TechnologyEdit);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const form = component['formGroup']();
+    // In publish mode, name/category/description are not in the form but ring/classificationDescription are
+    expect(form.get('name')).toBeNull();
+    expect(form.get('ring')).toBeDefined();
+
+    form.patchValue({ ring: '', classificationDescription: '' });
+    expect(form.valid).toBeFalsy();
+
+    form.patchValue({ ring: 'ADOPT', classificationDescription: 'Valid desc' });
+    expect(form.valid).toBeTruthy();
+  });
+
+  it('should call publishTechnology on submit in publish mode', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [TechnologyEdit],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: MAT_DIALOG_DATA, useValue: { id: '123', mode: 'publish' } },
+        { provide: MatDialogRef, useValue: dialogRefMock },
+        { provide: TechnologyApi, useValue: technologyServiceMock },
+        { provide: MatSnackBar, useValue: snackBarMock },
+      ],
+    }).compileComponents();
+    fixture = TestBed.createComponent(TechnologyEdit);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    component['onSubmit']({} as any);
+    expect(technologyServiceMock.publishTechnology).toHaveBeenCalledWith(
+      '123',
+      expect.anything(),
+    );
+  });
+
+  it('should call upsertTechnologyClassification on submit in classify mode', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [TechnologyEdit],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: MAT_DIALOG_DATA, useValue: { id: '123', mode: 'classify' } },
+        { provide: MatDialogRef, useValue: dialogRefMock },
+        { provide: TechnologyApi, useValue: technologyServiceMock },
+        { provide: MatSnackBar, useValue: snackBarMock },
+      ],
+    }).compileComponents();
+    fixture = TestBed.createComponent(TechnologyEdit);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    component['onSubmit']({} as any);
+    expect(
+      technologyServiceMock.upsertTechnologyClassification,
+    ).toHaveBeenCalledWith('123', expect.anything());
+  });
 });
