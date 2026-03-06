@@ -209,10 +209,10 @@ graph TD
               string description
               enum category "TECHNIQUES, TOOLS, PLATFORMS, LANGS_FRAMEWORKS"
               boolean published
-              enum ring "ADOPT, TRIAL, ASSESS, HOLD" optional
-              string classificationDescription optional
+              enum ring "ADOPT, TRIAL, ASSESS, HOLD"
+              string classificationDescription
               date createdAt
-              date publishedAt optional
+              date publishedAt
               date updatedAt
           }
       ```
