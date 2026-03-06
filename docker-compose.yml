@@ -43,6 +43,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: passwordChangeInProduction
     volumes:
       - mongodb_data:/data/db
+      - ./technologies_seed.json:/docker-entrypoint-initdb.d/technologies_seed.json
+      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
     ports:
       - "27017:27017"
 

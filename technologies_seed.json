@@ -1,0 +1,1162 @@
+[
+  {
+    "_id": {
+      "$oid": "69ab032fecebb87343824405"
+    },
+    "name": "TypeScript",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T10:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-01T12:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-02T08:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "ADOPT",
+    "description": "Eine typsichere Obermenge von JavaScript, die zu einfachem JavaScript kompiliert wird.",
+    "classificationDescription": "Standard für moderne Webentwicklung in unserem Unternehmen."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fdb4669fe6805aa03"
+    },
+    "name": "Docker",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-05T14:30:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-15T09:15:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-06T10:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "ring": "ADOPT",
+    "description": "Plattform für die Containerisierung von Anwendungen.",
+    "classificationDescription": "Essentiell für CI/CD und lokale Entwicklungsumgebungen."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032ff30436336f7a4cae"
+    },
+    "name": "NestJS",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-10T11:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-05T16:45:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-11T09:30:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "TRIAL",
+    "description": "Ein progressives Node.js-Framework für die Erstellung effizienter, zuverlässiger und skalierbarer serverseitiger Anwendungen.",
+    "classificationDescription": "Wir evaluieren NestJS als Standard-Backend-Framework für neue Microservices."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032ff7fe60796e17ecf3"
+    },
+    "name": "Kubernetes",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-20T08:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-20T08:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-21T11:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "ring": "TRIAL",
+    "description": "Ein Open-Source-System zur Automatisierung der Bereitstellung, Skalierung und Verwaltung von containerisierten Anwendungen.",
+    "classificationDescription": "Wird aktuell in Pilotprojekten zur Orchestrierung eingesetzt."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f1cd66fd59c72d4c4"
+    },
+    "name": "GraphQL",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-02-01T09:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-02-01T09:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-02-02T10:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "ring": "ASSESS",
+    "description": "Eine Abfragesprache für APIs und eine Laufzeitumgebung zur Erfüllung dieser Abfragen mit bestehenden Daten.",
+    "classificationDescription": "Beobachtung der Entwicklung und Prüfung auf Relevanz für datenintensive Frontends."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032ff3cc6948f47d52c3"
+    },
+    "name": "Jenkins",
+    "published": true,
+    "createdAt": {
+      "$date": "2025-12-01T10:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-15T14:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2025-12-02T09:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "HOLD",
+    "description": "Ein Open-Source-Automatisierungsserver, der hilft, Softwareprojekte zu bauen, zu testen und auszuliefern.",
+    "classificationDescription": "Wir migrieren weg von Jenkins hin zu GitHub Actions / GitLab CI."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fe487a345429370d1"
+    },
+    "name": "Micro Frontends",
+    "published": false,
+    "createdAt": {
+      "$date": "2026-03-01T10:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-01T10:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "description": "Ein Architekturstil, bei dem unabhängig lieferbare Frontend-Anwendungen zu einem größeren Ganzen zusammengesetzt werden.",
+    "classificationDescription": "Aktuell im Entwurfsstadium für die neue Portal-Architektur."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f6881696785732fec"
+    },
+    "name": "GitHub Actions",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Automatisierung von Workflows direkt in GitHub, von CI/CD bis hin zu komplexen Automatisierungen.",
+    "classificationDescription": "Unser Standard für CI/CD-Pipelines."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fe02a2b3726e46a05"
+    },
+    "name": "React",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "ADOPT",
+    "description": "Eine JavaScript-Bibliothek zum Erstellen von Benutzeroberflächen.",
+    "classificationDescription": "Standard für Frontend-Entwicklung."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fbdff5aa7ee62b73f"
+    },
+    "name": "Playwright",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Framework für Web-Testing und Automatisierung.",
+    "classificationDescription": "Wir migrieren von Cypress zu Playwright für E2E-Tests."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f5d228e78ed793d1d"
+    },
+    "name": "Backstage",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "ring": "TRIAL",
+    "description": "Eine offene Plattform für den Aufbau von Entwicklerportalen.",
+    "classificationDescription": "Wird evaluiert, um die Developer Experience zu verbessern."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f261e76e6d04dc8f3"
+    },
+    "name": "eBPF",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "ring": "TRIAL",
+    "description": "Eine revolutionäre Technologie, die es ermöglicht, Programme im Linux-Kernel auszuführen, ohne den Kernel-Quellcode zu ändern oder Module zu laden.",
+    "classificationDescription": "Untersuchung für Observability und Networking in Kubernetes."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f0b8db0ea1e0a823d"
+    },
+    "name": "WebAssembly",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "ASSESS",
+    "description": "Binäres Instruktionsformat für eine stackbasierte virtuelle Maschine, das im Webbrowser mit nativer Geschwindigkeit ausgeführt werden kann.",
+    "classificationDescription": "Beobachtung der Einsatzmöglichkeiten außerhalb des Browsers (Serverless)."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f3e195a9c00178c61"
+    },
+    "name": "Bun",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ASSESS",
+    "description": "Schneller JavaScript-Runtime, Package-Manager und Bundler.",
+    "classificationDescription": "Interessante Alternative zu Node.js, wird beobachtet."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fd8f69a07e07bef9d"
+    },
+    "name": "Go",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "ADOPT",
+    "description": "Statisch typisierte, kompilierte Programmiersprache von Google.",
+    "classificationDescription": "Bevorzugte Sprache für Performance-kritische Backends."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f92c93bf0fd782b71"
+    },
+    "name": "Rust",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "ADOPT",
+    "description": "Systemprogrammiersprache mit Fokus auf Sicherheit und Performance.",
+    "classificationDescription": "Wird zunehmend für WebAssembly und System-Tools eingesetzt."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fbca4248e36450c71"
+    },
+    "name": "Kotlin",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "ADOPT",
+    "description": "Moderne Sprache für die JVM und Android.",
+    "classificationDescription": "Standard für Android und moderne Java-Backends."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f7b8143c7c5f08a70"
+    },
+    "name": "Terraform",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Infrastructure as Code Tool zur Verwaltung von Cloud-Ressourcen.",
+    "classificationDescription": "Wird universell für Cloud-Infrastruktur verwendet."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032ff430d7dfd7960cbc"
+    },
+    "name": "Prometheus",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Monitoring- und Alerting-System für Cloud-native Anwendungen.",
+    "classificationDescription": "Standard für Metriken in Kubernetes-Umgebungen."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f3e16a48a28d9afd0"
+    },
+    "name": "Grafana",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Visualisierungstool für Zeitreihendaten.",
+    "classificationDescription": "Wird zusammen mit Prometheus für Dashboards verwendet."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f3d12221c09e7ab2c"
+    },
+    "name": "AWS Lambda",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "ring": "ADOPT",
+    "description": "Serverless Computing Plattform von AWS.",
+    "classificationDescription": "Standard für ereignisgesteuerte Microservices."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f92647571c1901094"
+    },
+    "name": "ArgoCD",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Declarative GitOps Continuous Delivery für Kubernetes.",
+    "classificationDescription": "Wird zur Automatisierung von Deployments genutzt."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fef35e5a62573b09f"
+    },
+    "name": "GitOps",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "ring": "ADOPT",
+    "description": "Betriebsmodell für Cloud-native Anwendungen mit Git als Single Source of Truth.",
+    "classificationDescription": "Zentrales Paradigma für unsere Infrastruktur."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fc3326364ef46d078"
+    },
+    "name": "Chaos Engineering",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "ring": "TRIAL",
+    "description": "Disziplin des Experimentierens an einem System, um Vertrauen in die Belastbarkeit zu gewinnen.",
+    "classificationDescription": "Erste Experimente in der Staging-Umgebung."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fadd5119b36c8a30a"
+    },
+    "name": "Serverless Architecture",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "ring": "ADOPT",
+    "description": "Architekturstil, bei dem die Infrastruktur vollständig abstrahiert wird.",
+    "classificationDescription": "Standard für skalierbare Web-Anwendungen."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fef541ee5af6b2f9a"
+    },
+    "name": "Cypress",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "HOLD",
+    "description": "JavaScript-basiertes E2E-Testing-Framework.",
+    "classificationDescription": "Wird durch Playwright ersetzt."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fe9ed3b89a0d16105"
+    },
+    "name": "Angular",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "ADOPT",
+    "description": "Web-Applikations-Framework von Google.",
+    "classificationDescription": "Eingesetzt in vielen Legacy-Projekten."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f2bf3a1f7e27f2475"
+    },
+    "name": "Vue.js",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "TRIAL",
+    "description": "Progressives JavaScript-Framework.",
+    "classificationDescription": "Wird für kleinere Projekte evaluiert."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f808eeee337d560e9"
+    },
+    "name": "Svelte",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "ASSESS",
+    "description": "Compiler für Benutzeroberflächen ohne Virtual DOM.",
+    "classificationDescription": "Beobachtung der Performance-Vorteile."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f69553495b3dccec4"
+    },
+    "name": "Deno",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ASSESS",
+    "description": "Sicherer Runtime für JavaScript und TypeScript.",
+    "classificationDescription": "Alternative zu Node.js, Fokus auf Sicherheit."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fd875433c291d615b"
+    },
+    "name": "Redis",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "ring": "ADOPT",
+    "description": "In-Memory Datenspeicher.",
+    "classificationDescription": "Standard für Caching und Message Queues."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f479d20268658a374"
+    },
+    "name": "Elasticsearch",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "ring": "ADOPT",
+    "description": "Such- und Analyse-Engine.",
+    "classificationDescription": "Eingesetzt für Volltextsuche und Log-Analyse."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f1985ca5e953620d1"
+    },
+    "name": "Kafka",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "ring": "ADOPT",
+    "description": "Distributed Event Streaming Plattform.",
+    "classificationDescription": "Rückgrat für Event-Driven Architekturen."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fb6357206a091950f"
+    },
+    "name": "RabbitMQ",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "ring": "HOLD",
+    "description": "Message Broker.",
+    "classificationDescription": "Wird zugunsten von Kafka reduziert."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f4c3e79d15bd50106"
+    },
+    "name": "PostgreSQL",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "ring": "ADOPT",
+    "description": "Objektrelationales Datenbanksystem.",
+    "classificationDescription": "Standard für relationale Daten."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f5849c0c9b54e4250"
+    },
+    "name": "MongoDB",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "ring": "ADOPT",
+    "description": "Dokumentenorientierte NoSQL-Datenbank.",
+    "classificationDescription": "Standard für unstrukturierte oder flexible Daten."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f5bb5ea4ee1ae860d"
+    },
+    "name": "Prisma",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Next-generation ORM für Node.js und TypeScript.",
+    "classificationDescription": "Bevorzugter Zugriff auf relationale Datenbanken."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f902bef7e47de40df"
+    },
+    "name": "Tailwind CSS",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Utility-first CSS-Framework.",
+    "classificationDescription": "Standard für Styling in modernen Frontends."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fc5cab7ce8269c306"
+    },
+    "name": "Storybook",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Tool zur Entwicklung von UI-Komponenten in Isolation.",
+    "classificationDescription": "Zentrales Tool für unser Design System."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f01d7d84e09b0a0dc"
+    },
+    "name": "Next.js",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "ADOPT",
+    "description": "React-Framework für produktionsreife Web-Apps.",
+    "classificationDescription": "Standard für SSR und statische Seiten."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f218ab8d80a7e10e5"
+    },
+    "name": "Nuxt.js",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "TRIAL",
+    "description": "Das Pendant zu Next.js für Vue.js.",
+    "classificationDescription": "Einsatz in Vue-basierten Pilotprojekten."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fecdc16ea2bc5eee1"
+    },
+    "name": "OpenTelemetry",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "ring": "ADOPT",
+    "description": "Framework für verteiltes Tracing und Telemetrie.",
+    "classificationDescription": "Standard für Observability."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f2302703287232bed"
+    },
+    "name": "Vite",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Nächste Generation von Frontend-Build-Tools.",
+    "classificationDescription": "Ersetzt Webpack in neuen Projekten."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032ff33b2d094e2c714a"
+    },
+    "name": "Webpack",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "HOLD",
+    "description": "Static Module Bundler für moderne JavaScript-Anwendungen.",
+    "classificationDescription": "Wird durch Vite ersetzt."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fe9c6ffae6c55fe05"
+    },
+    "name": "CircleCI",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "HOLD",
+    "description": "Cloud-basierte CI/CD-Plattform.",
+    "classificationDescription": "Migration zu GitHub Actions geplant."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fc446a242152dbd02"
+    },
+    "name": "Flutter",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "TRIAL",
+    "description": "UI SDK von Google für Multi-Plattform-Apps.",
+    "classificationDescription": "Wird für mobile Cross-Platform-Entwicklung genutzt."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f7caa827b0ccc52a6"
+    },
+    "name": "React Native",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "HOLD",
+    "description": "Framework für native Apps mit React.",
+    "classificationDescription": "Fokus verschiebt sich Richtung Flutter."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032ff57b99701fd0b681"
+    },
+    "name": "Solidity",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "LANGS_FRAMEWORKS",
+    "ring": "ASSESS",
+    "description": "Programmiersprache für Smart Contracts auf Ethereum.",
+    "classificationDescription": "Beobachtung der Blockchain-Trends."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fb775df32912c1fb5"
+    },
+    "name": "PyTorch",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Open-Source-Bibliothek für Machine Learning.",
+    "classificationDescription": "Standard für AI-Modellierung."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032ff4f7bb7fd013cb80"
+    },
+    "name": "TensorFlow",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "HOLD",
+    "description": "End-to-End Open Source Plattform für Machine Learning.",
+    "classificationDescription": "Migration zu PyTorch wird evaluiert."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fb4ed34afd3f9fdab"
+    },
+    "name": "Jupyter Notebooks",
+    "published": true,
+    "createdAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T00:00:00Z"
+    },
+    "publishedAt": {
+      "$date": "2026-01-01T00:00:00Z"
+    },
+    "category": "TOOLS",
+    "ring": "ADOPT",
+    "description": "Interaktive Computing-Umgebung.",
+    "classificationDescription": "Standard für Data Science und Experimente."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f352a1bb99c2706db"
+    },
+    "name": "Copilot for Individuals",
+    "published": false,
+    "createdAt": {
+      "$date": "2026-03-06T10:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T10:00:00Z"
+    },
+    "category": "TOOLS",
+    "description": "KI-gestützte Programmierhilfe.",
+    "classificationDescription": "Wird aktuell auf Compliance geprüft."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f2b456c5afa12658b"
+    },
+    "name": "Service Mesh",
+    "published": false,
+    "createdAt": {
+      "$date": "2026-03-06T11:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T11:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "description": "Infrastrukturschicht zur Steuerung der Service-zu-Service-Kommunikation.",
+    "classificationDescription": "Architekturentwurf für Istio-Einführung."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f108d4ea22bdf8cff"
+    },
+    "name": "Feature Flags",
+    "published": false,
+    "createdAt": {
+      "$date": "2026-03-06T12:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T12:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "description": "Technik zum Ein- und Ausschalten von Funktionen zur Laufzeit.",
+    "classificationDescription": "Konzeptphase für LaunchDarkly Integration."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f1cd15527dc23e80f"
+    },
+    "name": "Infrastructure as Code",
+    "published": false,
+    "createdAt": {
+      "$date": "2026-03-06T13:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T13:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "description": "Verwaltung von Infrastruktur durch maschinenlesbare Definitionsdateien.",
+    "classificationDescription": "Erweiterung der Best Practices Dokumentation."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f1609f4e6e7973372"
+    },
+    "name": "Data Mesh",
+    "published": false,
+    "createdAt": {
+      "$date": "2026-03-06T14:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T14:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "description": "Dezentrale Datenarchitektur.",
+    "classificationDescription": "Erste Sondierung für Big Data Strategie."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f5158a422776cd8f4"
+    },
+    "name": "Edge Computing",
+    "published": false,
+    "createdAt": {
+      "$date": "2026-03-06T15:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T15:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "description": "Dezentrale Datenverarbeitung am Rand des Netzwerks.",
+    "classificationDescription": "Forschungsprojekt für IoT-Anbindung."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fd9c0edefd8e91933"
+    },
+    "name": "WebGPU",
+    "published": false,
+    "createdAt": {
+      "$date": "2026-03-06T16:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T16:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "description": "Zukünftiger Standard für Grafik- und Rechenbeschleunigung im Web.",
+    "classificationDescription": "Evaluierung für Browser-basiertes Rendering."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032fe77477d14b47c60f"
+    },
+    "name": "Low-Code Plattformen",
+    "published": false,
+    "createdAt": {
+      "$date": "2026-03-06T17:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T17:00:00Z"
+    },
+    "category": "PLATFORMS",
+    "description": "Plattformen zur Anwendungsentwicklung mit minimalem manuellem Coding.",
+    "classificationDescription": "Kritische Prüfung für interne Tools."
+  },
+  {
+    "_id": {
+      "$oid": "69ab032f7b837f71f15efa39"
+    },
+    "name": "Quantum Computing",
+    "published": false,
+    "createdAt": {
+      "$date": "2026-03-06T18:00:00Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T18:00:00Z"
+    },
+    "category": "TECHNIQUES",
+    "description": "Nutzung quantenmechanischer Phänomene zur Datenverarbeitung.",
+    "classificationDescription": "Langzeitbeobachtung der Technologie."
+  }
+]
