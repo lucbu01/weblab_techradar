@@ -12,8 +12,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TechnologyApi {
-  private http = inject(HttpClient);
-  private apiUrl = '/api/technologies';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = '/api/technologies';
 
   getTechnologies(
     published?: boolean,

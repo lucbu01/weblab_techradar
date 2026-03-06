@@ -87,7 +87,36 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  @if(data.mode !== 'edit' || tech?.published) {
+  @let showPublishButton = data.mode !== 'edit' || tech?.published; @let
+  showDraftButton = data.mode === 'create' || (data.mode === 'edit' &&
+  !tech?.published); @if(smallerButtons() && showPublishButton &&
+  showDraftButton ) {
+  <button mat-button [matMenuTriggerFor]="menu">
+    Speichern <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button
+      mat-menu-item
+      [disabled]="form.invalid"
+      form="form"
+      type="submit"
+      value="publish"
+    >
+      <mat-icon>publish</mat-icon>
+      <span>Publizieren</span>
+    </button>
+    <button
+      mat-menu-item
+      [disabled]="form.invalid && !form.hasError('draft')"
+      form="form"
+      type="submit"
+      value="draft"
+    >
+      <mat-icon>edit_note</mat-icon>
+      <span>Entwurf speichern</span>
+    </button>
+  </mat-menu>
+  } @else { @if(showPublishButton) {
   <button
     mat-button
     [disabled]="form.invalid"
@@ -97,7 +126,7 @@
   >
     Publizieren
   </button>
-  } @if (data.mode === 'create' || (data.mode === 'edit' && !tech?.published)) {
+  } @if (showDraftButton) {
   <button
     mat-button
     [disabled]="form.invalid && !form.hasError('draft')"
@@ -107,6 +136,7 @@
   >
     Entwurf speichern
   </button>
-  }
+  } }
+
   <button mat-button mat-dialog-close>Abbrechen</button>
 </mat-dialog-actions>

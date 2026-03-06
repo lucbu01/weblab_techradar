@@ -13,9 +13,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class Home implements OnInit {
   protected readonly auth = inject(Auth);
-  protected env = inject(Env);
-  protected environment = toSignal(this.env.environmentLoaded);
-  protected manageUserUrl = computed(() => {
+  protected readonly env = inject(Env);
+  protected readonly environment = toSignal(this.env.environmentLoaded);
+  protected readonly manageUserUrl = computed(() => {
     return (
       this.environment()?.oidcIssuer?.split('/realms')[0] +
       '/admin/techradar/console/#/techradar/users'

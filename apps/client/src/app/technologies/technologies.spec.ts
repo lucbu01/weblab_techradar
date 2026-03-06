@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 
 import { vi } from 'vitest';
 import { Auth } from '../auth/auth';
+import { ActivatedRoute, Router } from '@angular/router';
 
 describe('Technologies', () => {
   let component: Technologies;
@@ -40,6 +41,18 @@ describe('Technologies', () => {
           useValue: {
             getTechnologies: vi.fn().mockReturnValue(of(mockTechnologies)),
             deleteTechnology: vi.fn().mockReturnValue(of(null)),
+          },
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            fragment: of(null),
+          },
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate: vi.fn(),
           },
         },
         { provide: Auth, useValue: authMock },

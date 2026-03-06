@@ -16,6 +16,10 @@ import { Category } from '../chips/category';
 import { Auth } from '../auth/auth';
 import type { EditMode } from '../technology-edit/technology-edit';
 import { Technology } from '@techradar/libs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'techradar-technology-detail',
@@ -29,17 +33,26 @@ import { Technology } from '@techradar/libs';
     MatButton,
     Ring,
     Category,
+    MatIconModule,
+    MatMenuModule,
   ],
   templateUrl: './technology-detail.html',
   styleUrl: './technology-detail.scss',
 })
 export class TechnologyDetail implements OnInit {
-  private data: { id: string } = inject(MAT_DIALOG_DATA);
-  private dialog = inject(MatDialog);
-  private technologyService = inject(TechnologyApi);
-  protected technology = signal<Technology | undefined>(undefined);
-  private auth = inject(Auth);
-  protected user = toSignal(this.auth.getUserInfo());
+  private readonly data: { id: string } = inject(MAT_DIALOG_DATA);
+  private readonly dialog = inject(MatDialog);
+  private readonly technologyService = inject(TechnologyApi);
+  private readonly auth = inject(Auth);
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
+  protected readonly smallerButtons = toSignal(
+    this.breakpointObserver
+      .observe([Breakpoints.HandsetPortrait])
+      .pipe(map((result) => result.matches)),
+  );
+  protected readonly technology = signal<Technology | undefined>(undefined);
+  protected readonly user = toSignal(this.auth.getUserInfo());
 
   ngOnInit() {
     this.technologyService
@@ -58,5 +71,11 @@ export class TechnologyDetail implements OnInit {
       })
       .afterClosed()
       .subscribe((technology: Technology) => this.technology.set(technology));
+  }
+
+  deleteTechnology() {
+    this.technologyService.deleteTechnology(this.data.id).subscribe(() => {
+      this.dialog.closeAll();
+    });
   }
 }

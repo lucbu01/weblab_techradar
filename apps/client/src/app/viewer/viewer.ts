@@ -38,13 +38,15 @@ import { MatFabButton } from '@angular/material/button';
   styleUrl: './viewer.scss',
 })
 export class Viewer implements OnInit, OnDestroy {
-  private subscriptions: Subscription[] = [];
-  private technologyService = inject(TechnologyApi);
-  private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
-  private dialog = inject(MatDialog);
+  private readonly technologyService = inject(TechnologyApi);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly dialog = inject(MatDialog);
+
+  private readonly subscriptions: Subscription[] = [];
   private dialogRef?: MatDialogRef<TechnologyDetail>;
-  technologies = signal<Technology[]>([]);
+
+  readonly technologies = signal<Technology[]>([]);
 
   ngOnInit() {
     this.loadTechnologies();

@@ -9,7 +9,7 @@ import {
 } from '@angular/material/dialog';
 import { TechnologyApi } from '../technology-api';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
+import { map, of } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -21,20 +21,19 @@ import { MatChip, MatChipSet } from '@angular/material/chips';
 import { Category } from '../chips/category';
 import { Ring } from '../chips/ring';
 import { MatButton } from '@angular/material/button';
-import {
-  MatError,
-  MatFormField,
-  MatInput,
-  MatLabel,
-} from '@angular/material/input';
-import { MatOption, MatSelect } from '@angular/material/select';
-import { MatDivider } from '@angular/material/list';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   CreateTechnology,
   TechnologyCategory,
   TechnologyRing,
 } from '@techradar/libs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDividerModule } from '@angular/material/divider';
 
 export type EditMode = 'create' | 'publish' | 'edit' | 'classify';
 
@@ -50,31 +49,38 @@ export type EditMode = 'create' | 'publish' | 'edit' | 'classify';
     MatDialogActions,
     MatButton,
     MatDialogTitle,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatSelect,
-    MatOption,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
     MatDialogClose,
-    MatDivider,
-    MatError,
+    MatDividerModule,
+    MatIconModule,
+    MatMenuModule,
   ],
   templateUrl: './technology-edit.html',
   styleUrl: './technology-edit.scss',
 })
 export class TechnologyEdit {
   protected data: { id?: string; mode: EditMode } = inject(MAT_DIALOG_DATA);
-  private dialogRef = inject(MatDialogRef<TechnologyEdit>);
-  private snackBar = inject(MatSnackBar);
-  private technologyService = inject(TechnologyApi);
-  private formBuilder = inject(FormBuilder);
-  protected technology = toSignal(
+  private readonly dialogRef = inject(MatDialogRef<TechnologyEdit>);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly technologyService = inject(TechnologyApi);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
+  protected readonly actionLabel = this.getActionLabel();
+
+  protected readonly smallerButtons = toSignal(
+    this.breakpointObserver
+      .observe([Breakpoints.HandsetPortrait])
+      .pipe(map((result) => result.matches)),
+  );
+  protected readonly technology = toSignal(
     this.data.id
       ? this.technologyService.getTechnologyById(this.data.id)
       : of(undefined),
   );
-  protected actionLabel = this.getActionLabel();
-  protected formGroup = computed(() => {
+  protected readonly formGroup = computed(() => {
     const technology = this.technology();
     const group: { [key: string]: Array<string | Array<ValidatorFn>> } = {};
     if (['create', 'edit'].includes(this.data.mode)) {

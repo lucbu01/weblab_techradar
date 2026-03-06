@@ -40,13 +40,20 @@
   margin-bottom: -16px;
   margin-left: -16px;
   margin-right: -16px;
-  padding-bottom: 48px;
+  padding-bottom: 64px;
 }
 
 .sticky-header {
   position: sticky;
   top: 0;
   z-index: 1;
+}
+
+.actions-cell {
+  position: sticky;
+  right: 0;
+  padding: 0;
+  width: 48px;
 }
 
 td {

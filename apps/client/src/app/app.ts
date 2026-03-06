@@ -30,19 +30,19 @@ import { MatDividerModule } from '@angular/material/divider';
   styleUrl: './app.scss',
 })
 export class App {
-  protected auth = inject(Auth);
-  protected http = inject(HttpClient);
-  protected env = inject(Env);
-  protected breakpointObserver = inject(BreakpointObserver);
-  protected environment = toSignal(this.env.environmentLoaded);
-  protected manageUserUrl = computed(() => {
+  protected readonly auth = inject(Auth);
+  protected readonly http = inject(HttpClient);
+  protected readonly env = inject(Env);
+  protected readonly breakpointObserver = inject(BreakpointObserver);
+  protected readonly environment = toSignal(this.env.environmentLoaded);
+  protected readonly manageUserUrl = computed(() => {
     return (
       this.environment()?.oidcIssuer?.split('/realms')[0] +
       '/admin/techradar/console/#/techradar/users'
     );
   });
   protected readonly user = toSignal(this.auth.getUserInfo());
-  protected hideSidebar = toSignal(
+  protected readonly hideSidebar = toSignal(
     this.breakpointObserver
       .observe([
         Breakpoints.Handset,

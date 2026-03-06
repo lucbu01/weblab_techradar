@@ -18,7 +18,32 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   @if (user()?.appRoles?.includes('CTO') ||
-  user()?.appRoles?.includes('TECHLEAD')) {
+  user()?.appRoles?.includes('TECHLEAD')) { @if (smallerButtons()) {
+  <button mat-button [matMenuTriggerFor]="menu">
+    Ändern <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="openEditDialog('edit')">
+      <mat-icon>edit</mat-icon>
+      <span>Beschreibung ändern</span>
+    </button>
+    @if (technology.published) {
+    <button mat-menu-item (click)="openEditDialog('classify')">
+      <mat-icon>category</mat-icon>
+      <span>Einstufung ändern</span>
+    </button>
+    } @else {
+    <button mat-menu-item (click)="openEditDialog('publish')">
+      <mat-icon>publish</mat-icon>
+      <span>Publizieren</span>
+    </button>
+    }
+    <button mat-menu-item (click)="deleteTechnology()">
+      <mat-icon>delete</mat-icon>
+      <span>Löschen</span>
+    </button>
+  </mat-menu>
+  } @else {
   <button mat-button (click)="openEditDialog('edit')">
     Beschreibung ändern
   </button>
@@ -28,6 +53,8 @@
   </button>
   } @else {
   <button mat-button (click)="openEditDialog('publish')">Publizieren</button>
+  }
+  <button mat-button (click)="deleteTechnology()">Löschen</button>
   }}
   <button mat-button mat-dialog-close>Schliessen</button>
 </mat-dialog-actions>

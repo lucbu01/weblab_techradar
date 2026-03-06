@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatHeaderRowDef, MatTableModule } from '@angular/material/table';
@@ -9,17 +9,19 @@ import { Ring } from '../chips/ring';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import type { EditMode } from '../technology-edit/technology-edit';
 import { MatChipsModule } from '@angular/material/chips';
 import { CdkFixedSizeVirtualScroll } from '@angular/cdk/scrolling';
-import { debounceTime } from 'rxjs';
+import { debounceTime, Subscription } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { Auth } from '../auth/auth';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import type { TechnologyDetail } from '../technology-detail/technology-detail';
 
 @Component({
   selector: 'techradar-technologies',
@@ -39,13 +41,21 @@ import { toSignal } from '@angular/core/rxjs-interop';
     MatChipsModule,
     CdkFixedSizeVirtualScroll,
     MatButtonModule,
+    RouterLink,
   ],
   templateUrl: './technologies.html',
   styleUrl: './technologies.scss',
 })
-export class Technologies implements OnInit {
+export class Technologies implements OnInit, OnDestroy {
   private readonly dialog = inject(MatDialog);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly auth = inject(Auth);
+  private readonly technologyApi = inject(TechnologyApi);
+
+  private readonly subscriptions: Subscription[] = [];
+  private dialogRef?: MatDialogRef<TechnologyDetail>;
   protected readonly searchForm = this.formBuilder.group({
     name: [''],
     category: [],
@@ -54,8 +64,6 @@ export class Technologies implements OnInit {
   });
 
   protected readonly technologies = signal<Technology[]>([]);
-  private readonly technologyService = inject(TechnologyApi);
-  private readonly auth = inject(Auth);
   protected readonly user = toSignal(this.auth.getUserInfo());
   protected readonly filter = signal(true);
 
@@ -71,11 +79,32 @@ export class Technologies implements OnInit {
     this.searchForm.valueChanges
       .pipe(debounceTime(300))
       .subscribe(() => this.loadTechnologies());
+    this.subscriptions.push(
+      this.activatedRoute.fragment.subscribe(async (id) => {
+        if (this.dialogRef) {
+          this.dialogRef.close();
+          this.dialogRef = undefined;
+          this.loadTechnologies();
+        }
+        if (id) {
+          const c = await import('../technology-detail/technology-detail');
+          this.dialogRef = this.dialog.open(c.TechnologyDetail, {
+            data: { id },
+            width: '600px',
+            maxWidth: 600,
+            restoreFocus: false,
+          });
+          this.dialogRef.afterClosed().subscribe(() => {
+            this.router.navigate([], { fragment: '' });
+          });
+        }
+      }),
+    );
   }
 
   private loadTechnologies() {
     const search = this.searchForm.value;
-    this.technologyService
+    this.technologyApi
       .getTechnologies(
         search.published === 'all'
           ? undefined
@@ -87,19 +116,6 @@ export class Technologies implements OnInit {
       .subscribe((techs) => {
         this.technologies.set(techs);
       });
-  }
-
-  async openDetailDialog(technology: Technology) {
-    const c = await import('../technology-detail/technology-detail');
-    this.dialog
-      .open(c.TechnologyDetail, {
-        data: { id: technology.id },
-        width: '600px',
-        maxWidth: 600,
-        restoreFocus: false,
-      })
-      .afterClosed()
-      .subscribe(() => this.loadTechnologies());
   }
 
   async openEditDialog(mode: EditMode, technology: Technology) {
@@ -129,8 +145,12 @@ export class Technologies implements OnInit {
   }
 
   deleteTechnology(technology: Technology) {
-    this.technologyService.deleteTechnology(technology.id).subscribe(() => {
+    this.technologyApi.deleteTechnology(technology.id).subscribe(() => {
       this.loadTechnologies();
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 }
