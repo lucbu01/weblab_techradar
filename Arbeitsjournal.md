@@ -99,5 +99,21 @@ Technologien können nun auch im Frontend erstellt und bearbetet weren. Ausserde
 
 Die App wurde optimiert mit responive Design und Fehlerhandling. Die Rolle Mitarbeiter (`EMPLOYEE`) kann jezt die Technologien auch tabellarisch ansehen. Die Tests wurden erweitert und die Dokumentation initialisiert.
 
+## Freitag, 6. März 2026
+
+### Morgen
+- Start: 10:00 Uhr
+- Ende: 11:30 Uhr
+- Aufwand: 1h 30min
+
+Der am Anfang zu Testzwecken Eingeführte "AppController" wurde aus dem Backend entfernt. Ausserdem wurde das Responsive-Design bei den Dialog Buttonleisten optimiert und einige Refactorings durchgeführt.
+
+### Abend
+- Start: 15:00 Uhr
+- Ende: 23:00 Uhr 
+- Aufwand: 7h (1h Pause)
+
+Die Technologie-Api wurde überarbeitet. Die Such-Api liefert jetzt nur noch ID, Name, Kategorie, Ring und Publikationsstatus der Technologie zurück. Das ist alles, was zum Anzeigen auf dem Radar oder in der Tabelle benötigt wird. Der Detail GET-Request liefert weiterhin alle Daten einer Technologie zurück. Die Darstellung der Technologien auf dem Radar wurde mit Hilfe von JetBrains Junie optimiert. Ausserdem wurde bei der Tabelle eine Sortierungsmöglichkeit eingeführt, weitere Tests wurden hinzugefügt, die Dokumentation ergänzt und die Reflexion und das Abgabedokument geschrieben. Zusätzlich wurden noch kleinere Optimierungen und Bugfixes an der App vorgenommen.
+
 ## Zusammenfassung
 Aufwand insgesamt: 54h
