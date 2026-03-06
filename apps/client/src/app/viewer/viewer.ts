@@ -21,6 +21,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import type { TechnologyDetail } from '../technology-detail/technology-detail';
 import { MatFabButton } from '@angular/material/button';
 import { Ring } from '../chips/ring';
+import { Auth } from '../auth/auth';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface TechnologyWithPosition extends TechnologyList {
   x: number;
@@ -50,11 +52,13 @@ export class Viewer implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly dialog = inject(MatDialog);
+  private readonly auth = inject(Auth);
 
   private readonly subscriptions: Subscription[] = [];
   private dialogRef?: MatDialogRef<TechnologyDetail>;
-  readonly technologies = signal<TechnologyWithPosition[]>([]);
 
+  readonly user = toSignal(this.auth.getUserInfo());
+  readonly technologies = signal<TechnologyWithPosition[]>([]);
   readonly hoveredId = signal<string | null>(null);
   readonly hoveredTech = computed(() => {
     const id = this.hoveredId();

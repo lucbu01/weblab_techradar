@@ -7,12 +7,14 @@ import { of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { TechnologyApi } from '../technology-api';
 import { vi } from 'vitest';
+import { Auth } from '../auth/auth';
 
 describe('Viewer', () => {
   let component: Viewer;
   let fixture: ComponentFixture<Viewer>;
   let technologyServiceMock: any;
   let dialogMock: any;
+  let authMock: any;
 
   const mockTechs = [
     { id: '1', name: 'Tech 1', ring: 'ADOPT', category: 'TOOLS' },
@@ -26,6 +28,9 @@ describe('Viewer', () => {
       open: vi.fn().mockReturnValue({
         afterClosed: () => of(true),
       }),
+    };
+    authMock = {
+      getUserInfo: vi.fn().mockReturnValue(of({ appRoles: [] })),
     };
 
     await TestBed.configureTestingModule({
@@ -53,6 +58,7 @@ describe('Viewer', () => {
           provide: TechnologyApi,
           useValue: technologyServiceMock,
         },
+        { provide: Auth, useValue: authMock },
       ],
     }).compileComponents();
 

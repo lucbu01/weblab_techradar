@@ -1,4 +1,6 @@
 <div class="radar-container">
+  @if(user()?.appRoles?.includes('CTO') ||
+  user()?.appRoles?.includes('TECHLEAD')) {
   <button
     class="create-button"
     mat-fab
@@ -8,6 +10,7 @@
   >
     <mat-icon>add</mat-icon>
   </button>
+  }
   <div class="radar-layout">
     <mat-card class="radar-visualization">
       <mat-card-content>
