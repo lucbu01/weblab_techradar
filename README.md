@@ -95,6 +95,8 @@ cd dist/apps/server
 npm ci
 ```
 
+Alles im `dist` Verzeichnis an den gewünschten Ort kopieren. Im Unterordner `server` (vom `dist` Verzeichnis) kann der Server dann mit `node main.js` gestartet werden.
+
 ### Nützliche Nx-Tasks
 
 Um alle verfügbaren Tasks für ein Projekt zu sehen, benutze:
