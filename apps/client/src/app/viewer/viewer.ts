@@ -111,10 +111,9 @@ export class Viewer implements OnInit, OnDestroy {
 
   private addPosition(techs: TechnologyList[]): TechnologyWithPosition[] {
     const placedPoints: { x: number; y: number; r: number }[] = [];
-    const minDistance = 24; // 10px Radius * 2 + 4px Puffer zwischen den Punkten
-    const maxAttempts = 500; // Ausreichend hohe Anzahl für dichte Platzierungen
+    const minDistance = 24; // 10px Radius * 2 + 4px Puffer
+    const maxAttempts = 500;
 
-    // Sortieren, damit die Reihenfolge und somit das Layout konsistent bleiben
     const sortedForPlacement = [...techs].sort((a, b) =>
       a.id.localeCompare(b.id),
     ) as TechnologyWithPosition[];
@@ -127,6 +126,20 @@ export class Viewer implements OnInit, OnDestroy {
       return (seed - 1) / 2147483646;
     };
 
+    const randomPos = (bounds: {
+      minR: number;
+      maxR: number;
+      minA: number;
+      maxA: number;
+    }) => {
+      const r2 =
+        random() * (bounds.maxR * bounds.maxR - bounds.minR * bounds.minR) +
+        bounds.minR * bounds.minR;
+      const randomRadius = Math.sqrt(r2);
+      const randomAngle = bounds.minA + random() * (bounds.maxA - bounds.minA);
+      return this.polarToCartesian(randomRadius, randomAngle);
+    };
+
     for (const tech of sortedForPlacement) {
       const bounds = this.getBounds(tech.ring, tech.category);
       let placed = false;
@@ -134,14 +147,7 @@ export class Viewer implements OnInit, OnDestroy {
       // Versuche eine freie Position zu finden
       for (let attempt = 0; attempt < maxAttempts; attempt++) {
         // Flächenkorrekte Verteilung im Donut-Segment
-        const r2 =
-          random() * (bounds.maxR * bounds.maxR - bounds.minR * bounds.minR) +
-          bounds.minR * bounds.minR;
-        const randomRadius = Math.sqrt(r2);
-        const randomAngle =
-          bounds.minA + random() * (bounds.maxA - bounds.minA);
-
-        const point = this.polarToCartesian(randomRadius, randomAngle);
+        const point = randomPos(bounds);
 
         // Prüfen, ob der Punkt zu nah an einem bereits platzierten Punkt liegt
         const hasCollision = placedPoints.some((p) => {
@@ -161,13 +167,7 @@ export class Viewer implements OnInit, OnDestroy {
 
       // Fallback, falls der Ring komplett voll ist (erzwingt Platzierung mit minimaler Überschneidung)
       if (!placed) {
-        const r2 =
-          random() * (bounds.maxR * bounds.maxR - bounds.minR * bounds.minR) +
-          bounds.minR * bounds.minR;
-        const randomRadius = Math.sqrt(r2);
-        const randomAngle =
-          bounds.minA + random() * (bounds.maxA - bounds.minA);
-        const point = this.polarToCartesian(randomRadius, randomAngle);
+        const point = randomPos(bounds);
 
         placedPoints.push({ ...point, r: 10 });
         tech.x = point.x;
@@ -206,8 +206,7 @@ export class Viewer implements OnInit, OnDestroy {
 
     // Winkel-Grenzen (in Radiant, 0 ist rechts, Pi/2 ist unten)
     const padding = 0.15; // ca. 8,5 Grad Abstand zu den Fadenkreuz-Linien
-    let minA = 0,
-      maxA = 0;
+    let minA, maxA;
 
     switch (category) {
       case 'TECHNIQUES': // Oben Rechts
@@ -215,7 +214,7 @@ export class Viewer implements OnInit, OnDestroy {
         maxA = 0 - padding;
         break;
       case 'PLATFORMS': // Unten Rechts
-        minA = 0 + padding;
+        minA = padding;
         maxA = Math.PI / 2 - padding;
         break;
       case 'TOOLS': // Unten Links
@@ -238,7 +237,7 @@ export class Viewer implements OnInit, OnDestroy {
     radius: number,
     angle: number,
   ): { x: number; y: number } {
-    const center = 400; // Da deine SVG ViewBox 800x800 ist
+    const center = 400;
     return {
       x: center + radius * Math.cos(angle),
       y: center + radius * Math.sin(angle),
