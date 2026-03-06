@@ -92,5 +92,12 @@ Ein Detail-Viewer in Form eines Dialogs wurde erstellt. Der Server kann jetzt de
 
 Technologien können nun auch im Frontend erstellt und bearbetet weren. Ausserdem gibt es eine Admin-View, wo man die Technologien suchen kann, um sie zu bearbeiten oder zu löschen.
 
+## Donnerstag, 5. März 2026
+- Start: 18:00 Uhr
+- Ende: 01:30 Uhr
+- Aufwand: 7h (30min Pause)
+
+Die App wurde optimiert mit responive Design und Fehlerhandling. Die Rolle Mitarbeiter (`EMPLOYEE`) kann jezt die Technologien auch tabellarisch ansehen. Die Tests wurden erweitert und die Dokumentation initialisiert.
+
 ## Zusammenfassung
 Aufwand insgesamt: 47h
