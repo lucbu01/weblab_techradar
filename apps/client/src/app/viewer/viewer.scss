@@ -63,10 +63,6 @@ circle {
   stroke: var(--mat-sys-surface);
   transition: r 0.2s ease-in-out;
   cursor: pointer;
-
-  &:hover {
-    r: 14;
-  }
 }
 
 .dot.adopt {

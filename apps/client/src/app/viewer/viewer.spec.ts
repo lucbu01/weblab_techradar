@@ -67,16 +67,18 @@ describe('Viewer', () => {
 
   it('should load technologies on init', () => {
     expect(technologyServiceMock.getTechnologies).toHaveBeenCalledWith(true);
-    expect(component.technologies()).toEqual(mockTechs as any);
+    const techs = component.technologies();
+    expect(techs.length).toBe(1);
+    expect(techs[0].name).toBe('Tech 1');
   });
 
   it('should calculate points correctly', () => {
-    const point = component.getPoint(mockTechs[0] as any);
-    expect(point.x).toBeDefined();
-    expect(point.y).toBeDefined();
-    // Center is 400, radius for ADOPT is 40. x should be 400 + 40 * cos(angle)
-    expect(point.x).toBeGreaterThan(300);
-    expect(point.x).toBeLessThan(500);
+    const tech = component.technologies()[0];
+    expect(tech.x).toBeDefined();
+    expect(tech.y).toBeDefined();
+    // Center is 400. x should be in range
+    expect(tech.x).toBeGreaterThan(300);
+    expect(tech.x).toBeLessThan(500);
   });
 
   it('should open add technology dialog', async () => {

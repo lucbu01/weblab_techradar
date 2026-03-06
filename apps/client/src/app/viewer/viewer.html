@@ -18,10 +18,10 @@
           height="100%"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <circle cx="400" cy="400" r="380" class="ring-assess" />
-          <circle cx="400" cy="400" r="280" class="ring-trial" />
-          <circle cx="400" cy="400" r="180" class="ring-adopt" />
-          <circle cx="400" cy="400" r="80" class="ring-hold" />
+          <circle cx="400" cy="400" r="380" class="ring-hold" />
+          <circle cx="400" cy="400" r="280" class="ring-assess" />
+          <circle cx="400" cy="400" r="180" class="ring-trial" />
+          <circle cx="400" cy="400" r="80" class="ring-adopt" />
 
           <line x1="400" y1="20" x2="400" y2="780" class="radar-line" />
           <line x1="20" y1="400" x2="780" y2="400" class="radar-line" />
@@ -33,22 +33,43 @@
           <text x="345" y="775" class="category-label">TOOLS</text>
           <text x="40" y="395" class="category-label">LANGS & FRAMEWORKS</text>
 
-          @for (tech of technologies(); track tech.id) { @let point =
-          getPoint(tech);
+          @for (tech of technologies(); track tech.id) {
           <circle
-            [attr.cx]="point.x"
-            [attr.cy]="point.y"
+            [attr.cx]="tech.x"
+            [attr.cy]="tech.y"
             r="10"
             [attr.class]="'dot ' + tech.ring?.toLowerCase()"
-            matTooltip="{{ tech.name }} - {{ tech.ring }}"
+            matTooltip="{{ tech.name }} - {{tech.ring }}"
             [routerLink]="[]"
             [fragment]="tech.id"
+            (mouseenter)="hoveredId.set(tech.id)"
+            (mouseleave)="hoveredId.set(null)"
           ></circle>
           <text
-            [attr.x]="point.x"
-            [attr.y]="point.y"
+            [attr.x]="tech.x"
+            [attr.y]="tech.y"
             font-size="14"
             font-weight="400"
+            text-anchor="middle"
+            dominant-baseline="central"
+            pointer-events="none"
+            fill="white"
+          >
+            {{tech.name.substring(0,1).toUpperCase()}}
+          </text>
+          } @if (hoveredTech(); as tech) {
+          <circle
+            [attr.cx]="tech.x"
+            [attr.cy]="tech.y"
+            r="14"
+            [attr.class]="'dot ' + tech.ring?.toLowerCase()"
+            style="pointer-events: none"
+          ></circle>
+          <text
+            [attr.x]="tech.x"
+            [attr.y]="tech.y"
+            font-size="18"
+            font-weight="600"
             text-anchor="middle"
             dominant-baseline="central"
             pointer-events="none"
