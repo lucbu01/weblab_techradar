@@ -23,13 +23,13 @@ Das Projekt "Technologie-Radar" dient als zentrales Werkzeug für die Verwaltung
 
 ### Aufgabenstellung
 - **Erfassung und Bearbeitung Technologien**: Strukturierte Ablage von Beschreibungen, Kategorien und Reifegraden (Ringen).
-- **Visualisierung**: Darstellung der Technologien (Als Liste, Tabellarisch oder Radar)
+- **Visualisierung**: Darstellung der Technologien (Als Liste, tabellarisch oder Radar)
 - **Rollenbasiertes System**: Trennung zwischen Administration (Schreiben) und Viewer (Lesen).
 
 ### Qualitätsziele
 - **Sicherheit**: Schutz der Administrationsdaten durch rollenbasierte Zugriffssteuerung.
 - **Benutzerfreundlichkeit**: Intuitive Darstellung und einfache Bedienung, auch auf mobilen Geräten.
-- **Wartbarkeit**: Klare Architektur (Nx Monorepo) und hohe Testabdeckung.
+- **Wartbarkeit**: Klare Architektur und hohe Testabdeckung.
 - **Performance**: Schnelle Ladezeiten (< 1s für den Viewer).
 - **Audit-Logging**: Protokollierung administrativer Logins.
 
@@ -47,19 +47,26 @@ Das Projekt "Technologie-Radar" dient als zentrales Werkzeug für die Verwaltung
 
 Das System interagiert mit folgenden externen Komponenten:
 - **Keycloak**: Externer Identity Provider für die Authentifizierung und Rollenverwaltung.
-- **MongoDB**: Dokumenten-orientierte Datenbank für die Persistenz der Technologien und Audit-Logs.
+- **MongoDB**: Dokumentenorientierte Datenbank für die Persistenz der Technologien und Audit-Logs.
 - **Browser**: Endgerät des Nutzers zur Interaktion mit der Web-Applikation.
 
 ### Fachlicher Kontext
-Das Technologie-Radar dient als Software-as-a-Service (SaaS) Tool zur Verwaltung und Visualisierung von Technologietrends in einer Organisation. Das System ist in zwei Hauptbereiche unterteilt:
-- **Technologie-Radar-Administration:** Ermöglicht CTOs und Tech-Leads die Erfassung, Bearbeitung und Publikation von Technologien.
-- **Technologie-Radar-Viewer:** Ermöglicht allen Mitarbeitern die strukturierte Einsicht in die publizierten Technologien.
+Das Technologie-Radar dient der Verwaltung und Visualisierung von Technologietrends in einer Organisation.
+Das UI für Read-Only- (EMPLOYEE) und Admin-User (CTO/TECHLEAD) ist das gleiche. Je nach Rolle werden einfach unterschiedliche Funktionen angezeigt.
 
-- **Rollen:** 
+#### Rollen 
+
   - *CTO* (CTO): Berechtigt zur Administration der Technologien über die App und zum Verwalten der Nutzer im Keycloak (Login-Pflicht).
   - *Tech-Lead* (TECHLEAD): Berechtigt zur Administration der Technologien (Login-Pflicht).
-  - *Mitarbeiter* (EMPLOYEE): Berechtigt zum Viewer (Login-Pflicht gemäß Story 7).
-- **Kernfunktionen:** Technologien erfassen (Entwürfe), publizieren, kategorisieren (Techniques, Tools, Platforms, Languages & Frameworks) und in Ringe einordnen (Adopt, Trial, Assess, Hold).
+  - *Mitarbeiter* (EMPLOYEE): Berechtigt zum Anzeigen der Technologien (Login-Pflicht gemäß Story 7).
+
+#### Kernfunktionen
+
+  - Technologien erfassen (Als Entwurf oder Publikation)
+  - Entwürfe publizieren
+  - Technologien kategorisieren (Techniques, Tools, Platforms, Languages & Frameworks)
+  - Technologien in Ringe einordnen (Adopt, Trial, Assess, Hold)
+  - Technologien anzeigen (als Radar oder tabellarisch)
 
 ### Technischer Kontext
 Das System ist als Webapplikation konzipiert und besteht aus folgenden Komponenten:
@@ -80,7 +87,7 @@ graph TD
 
 ### Schnittstellen & API-Dokumentation
 Das Backend stellt eine REST-API zur Verfügung. Zur interaktiven Erkundung und als technischer Vertrag zwischen Frontend und Backend wird Swagger/OpenAPI genutzt.
-Die vollständige API-Dokumentation ist zur Laufzeit der lokalen Entwicklungsumgebung unter http://localhost:3000/api/docs erreichbar.
+Die vollständige API-Dokumentation ist zur Laufzeit der lokalen Entwicklungsumgebung unter http://localhost:3000/api/docs oder in der publizierten [Live-Demo](https://techradar.lucbu.ch/api/docs) aufrufbar.
 
 ---
 
@@ -92,7 +99,6 @@ Um die wesentlichen Qualitätsziele und fachlichen Anforderungen des Technologie
 - **NestJS & Angular (Typensicherheit):** Nutzung von TypeScript über den gesamten Stack hinweg für bessere Wartbarkeit. Für NestJS wird Jest (Backend-Tests) und für Angular Vitest (Frontend-Tests) verwendet.
 - **Delegation von Identity & Access Management (OIDC/Keycloak):** Anstatt eine eigene Authentifizierungslösung zu implementieren, wird das Identitäts- und Zugriffsmanagement vollständig an einen externen Identity Provider (Keycloak) ausgelagert. Die Absicherung erfolgt standardisiert über OpenID Connect (OIDC) und JSON Web Tokens (JWT).
 - **Dokumentenorientierte Persistenz (Flexibilität):** Für die Speicherung der Technologien und Audit-Logs wird MongoDB eingesetzt. Das schema-flexible Design erlaubt es, zukünftige Anpassungen an den Technologie-Metadaten unkompliziert vorzunehmen.
-- **Strict Separation of Concerns:** Das System ist strikt in Frontend und Backend getrennt. Die Kommunikation erfolgt ausschließlich über eine dokumentierte REST-API (Swagger).
 - **Containerisierung (Portabilität):** Das gesamte System wird mittels Docker containerisiert und via Docker Compose orchestriert.
 - **Automatisierung:** Nutzung von GitHub Actions für automatisierte Builds und Tests bei jedem Commit sowie ESLint/Prettier zur Standardisierung des Code-Styles.
 
@@ -256,7 +262,7 @@ graph TD
   - Token-basierte Authentifizierung (OIDC/JWT).
   - Role-Based Access Control (RBAC): Nur Nutzer mit Rollen `CTO` oder `Tech-Lead` haben Zugriff auf administrative API-Endpunkte. Die Rolle `Mitarbeiter` hat nur Leserechte auf die Technologien.
 - **Logging/Audit:**
-  - Gemäß Anforderung werden sämtliche Anmeldungen an der Administration (Rollen 'CTO' oder 'Tech-Lead') aufgezeichnet (`AdminLoginAuditInterceptor`).
+  - Gemäß Anforderung werden sämtliche Anmeldungen an der Administration (Rollen `CTO` oder `Tech-Lead`) aufgezeichnet (`AdminLoginAuditInterceptor`).
   - Die Audit-Einträge können in der Datenbank oder über die API `GET /api/audit` (von der Rolle `CTO`) abgefragt werden. Sie werden aber nicht im Client dargestellt.
 - **Konfiguration:**
   - Die Anwendung nutzt Umgebungsvariablen zur Konfiguration (OIDC, Datenbanken).
@@ -265,7 +271,6 @@ graph TD
   - Technologien unterstützen Entwurfs- und Publikationsstatus.
   - Automatisches Tracking von Zeitstempeln (Erstellungsdatum, Publikationsdatum, Änderungsdatum).
     Das Kern-Datenmodell für Technologien (in MongoDB gespeichert) sieht wie folgt aus:
-
       ```mermaid
       erDiagram
           TECHNOLOGY {
@@ -283,11 +288,10 @@ graph TD
       ```
 - **Fehlerbehandlung & Resilienz:**
   - Globale Fehlererfassung im Backend via NestJS Exception Filters (z. B. für HTTP-Fehler, Validierungsfehler oder DB-Ausfälle).
-  - Im Frontend: HTTP-Interceptor fängt API-Fehler ab und zeigt sie benutzerfreundlich (z. B. via Angular Material SnackBar) an.
+  - Im Frontend: HTTP-Interceptor fängt API-Fehler ab und zeigt sie benutzerfreundlich (via Angular Material SnackBar) an.
   - Resilienz: Automatische Retries für MongoDB-Verbindungen (via Mongoose-Options) und Graceful Shutdown bei Container-Ausfällen.
 - **Frontend-Architektur:** 
   - Responsive Design für Mobile- und Tablet-Ansicht (SCSS Media Queries).
-  - Optimierte Ladezeiten für 4G-Verbindungen.
 
 ---
 
@@ -295,9 +299,13 @@ graph TD
 
 Wichtige architektonische Entscheidungen, die über die Technologieentscheidungen hinausgehen:
 
+- **Strict Separation of Concerns:** 
+  *   **Entscheidung:** Das System ist strikt in Frontend und Backend getrennt. Die Kommunikation erfolgt ausschließlich über eine dokumentierte REST-API (Swagger).
+  *   **Begründung:** Durch die Trennung von Frontend und Backend wird die Verantwortlichkeit für die jeweiligen Bereiche klar definiert, was zu einer besseren Skalierbarkeit und Wartbarkeit führt. Die REST-API stellt einen klaren Vertrag zwischen den beiden Komponenten her, daher könnte auch eine der beiden Komponenten in Zukunft ausgetauscht werden.
+
 - **Zentralisiertes Shared Library Konzept:** 
    *   **Entscheidung:** Nutzung einer `libs`-Library im Nx Monorepo für alle gemeinsamen Typen und Interfaces.
-   *   **Begründung:** Garantiert 100%ige Übereinstimmung der Datenmodelle zwischen Frontend und Backend ("Single Source of Truth") und reduziert Redundanz.
+   *   **Begründung:** Garantiert die Übereinstimmung der Datenmodelle zwischen Frontend und Backend ("Single Source of Truth") und reduziert Redundanz.
 
 - **Deterministische Radar-Positionierung:**
    *   **Entscheidung:** Berechnung der X/Y-Koordinaten im Frontend basierend auf einem deterministischen Seed und der Technologie-ID.
@@ -324,18 +332,18 @@ Wichtige architektonische Entscheidungen, die über die Technologieentscheidunge
   - Schutz der Datenanzeige durch Authentifizierung (`Mitarbeiter`, `CTO`, `Tech-Lead`).
   - Protokollierung kritischer Ereignisse (Login-Audit).
 - **Wartbarkeit:** 
-  - Hohe Testabdeckung (> 80% der Kernlogik) durch automatisierte **Unit- und Integration-Tests**.
+  - Hohe Testabdeckung durch automatisierte **Unit- und Integration-Tests**.
   - Konsistenter Code-Style durch ESLint und Prettier.
 - **Performance:** 
-  - Ladezeit des Viewers unter **1 Sekunde** bei einer Standard-4G-Verbindung (Fast 4G).
   - Effiziente Datenbankabfragen durch Indizes auf häufig gefilterte Felder (`published`).
+  - Reduzierte Datenmenge bei Abfrage von mehreren Technologien durch Ausblenden von Informationen, welche für die Übersicht nicht wichtig sind.
 
 ---
 
 ## 11. Risiken und technische Schulden
 
 - **Abhängigkeit von Keycloak:** Das System setzt eine laufende Keycloak-Instanz voraus. Ein Ausfall blockiert den Zugriff auf sämtliche Funktionen (außer der Home-Seite).
-- **Client-seitige Positionsberechnung:** Die Positionen im Radar werden im Frontend berechnet. Bei extrem vielen Technologien (> 200 pro Quadrant) könnte die Performance der Initialberechnung sinken (aktuell durch deterministisches Caching und Kollisionsvermeidung optimiert).
+- **Clientseitige Positionsberechnung:** Die Positionen im Radar werden im Frontend berechnet. Bei extrem vielen Technologien (> 200 pro Quadrant) könnte die Performance der Initialberechnung sinken (aktuell durch deterministisches Caching und Kollisionsvermeidung optimiert).
 - **Manuelle Datenpflege:** Es gibt aktuell keine automatisierte Synchronisation mit externen Quellen (z.B. GitHub/NPM).
 
 ---
@@ -344,7 +352,7 @@ Wichtige architektonische Entscheidungen, die über die Technologieentscheidunge
 
 | Begriff      | Erklärung                                                                                                |
 |:-------------|:---------------------------------------------------------------------------------------------------------|
-| **Quadrant** | Fachliche Einteilung (Techniques, Tools, Platforms, Langs & Frameworks).                                 |
+| **Quadrant** | Fachliche Einteilung (Techniques, Tools, Platforms, Languagess & Frameworks).                            |
 | **Ring**     | Einstufung der Reife (Adopt, Trial, Assess, Hold).                                                       |
 | **OIDC**     | OpenID Connect – Standard für Authentifizierung.                                                         |
 | **JWT**      | JSON Web Token – Format für Sicherheits-Token.                                                           |
@@ -359,7 +367,6 @@ Die Anwendung wird über Umgebungsvariablen konfiguriert. Diese werden vom Backe
 
 | Variable           | Beschreibung                                 | Standardwert (Dev)                                            |
 |:-------------------|:---------------------------------------------|:--------------------------------------------------------------|
-| `PORT`             | Port, auf dem der Server lauscht.            | `3000`                                                        |
 | `MONGODB_URI`      | Verbindungs-String für MongoDB.              | `mongodb://admin:passwordChangeInProduction@localhost:27017/` |
 | `MONGODB_DATABASE` | Name der MongoDB-Datenbank.                  | `techradar`                                                   |
 | `OIDC_ISSUER`      | URL des Identity Providers (Keycloak Realm). | `http://localhost:8180/realms/techradar`                      |
@@ -375,9 +382,18 @@ Bei der Verwendung von `docker-compose.yml` werden zusätzlich folgende Variable
 | **Postgres** | `POSTGRES_DB`                 | Datenbankname für Keycloak.               |
 |              | `POSTGRES_USER`               | Benutzername für Postgres.                |
 |              | `POSTGRES_PASSWORD`           | Passwort für Postgres.                    |
-| **Keycloak** | `KC_DB_URL`                   | JDBC-URL zur Postgres-DB.                 |
+| **Keycloak** | `KC_DB`                       | Datenbankname für Keycloak.               |
+|              | `KC_DB_URL`                   | JDBC-URL zur Postgres-DB.                 |
+|              | `KC_DB_USERNAME`              | Datenbank-Benutzername für Keycloak.      |
+|              | `KC_DB_PASSWORD`              | Datenbank-Passwort für Keycloak.          |
+|              | `KC_HOSTNAME`                 | Hostname für Keycloak (z.B. `localhost`). |
+|              | `KC_LOG_LEVEL`                | Keycloak Log-Level.                       |
+|              | `KC_METRICS_ENABLED`          | Keycloak Metriken aktivieren.             |
+|              | `KC_HEALTH_ENABLED`           | Keycloak Health-Check aktivieren.         |
 |              | `KC_HOSTNAME`                 | Hostname für Keycloak (z.B. `localhost`). |
 |              | `KC_BOOTSTRAP_ADMIN_USERNAME` | Initialer Admin-User.                     |
 |              | `KC_BOOTSTRAP_ADMIN_PASSWORD` | Initiales Admin-Passwort.                 |
 | **MongoDB**  | `MONGO_INITDB_ROOT_USERNAME`  | Root-Benutzer für MongoDB.                |
 |              | `MONGO_INITDB_ROOT_PASSWORD`  | Root-Passwort für MongoDB.                |
+ 
+Ausserdem wird in der lokalen Entwicklungsumgebung beim ersten Start von Keycloak ein vorkonfiguriertes Realm importiert und die MongoDB wird beim ersten Start mit Beispieldaten gefüllt.
