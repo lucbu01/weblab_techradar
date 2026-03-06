@@ -23,6 +23,9 @@ import { join } from 'node:path';
     MongooseModule.forRoot(process.env.MONGODB_URI, {
       autoCreate: true,
       dbName: process.env.MONGODB_DATABASE,
+      retryAttempts: 5,
+      retryDelay: 1000,
+      connectTimeoutMS: 10000,
     }),
     AuditModule,
     TechnologyModule,

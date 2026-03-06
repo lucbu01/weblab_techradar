@@ -22,6 +22,7 @@ import {
 } from 'angular-auth-oidc-client';
 import { Env } from './env/env';
 import { map, switchMap, take } from 'rxjs';
+import { errorInterceptor } from './error-interceptor';
 
 const appInitializerFn = () => {
   return inject(Env).loadEnv(new HttpClient(inject(HttpBackend)));
@@ -73,6 +74,6 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     provideAppInitializer(authCheckInitializerFn),
-    provideHttpClient(withInterceptors([authInterceptor()])),
+    provideHttpClient(withInterceptors([authInterceptor(), errorInterceptor])),
   ],
 };
