@@ -1,5 +1,20 @@
 # Dokumentation WEBLAB Projekt Technologie-Radar
 
+## Inhaltsverzeichnis
+- [1. Einführung und Ziele](#1-einführung-und-ziele)
+- [2. Randbedingungen](#2-randbedingungen)
+- [3. Kontextabgrenzung](#3-kontextabgrenzung)
+- [4. Lösungsstrategie](#4-lösungsstrategie)
+- [5. Bausteinsicht](#5-bausteinsicht)
+- [6. Laufzeitsicht](#6-laufzeitsicht)
+- [7. Verteilungssicht](#7-verteilungssicht)
+- [8. Querschnittliche Konzepte](#8-querschnittliche-konzepte)
+- [9. Architekturentscheidungen (ADR)](#9-architekturentscheidungen-adr)
+- [10. Qualitätsanforderungen](#10-qualitätsanforderungen)
+- [11. Risiken und technische Schulden](#11-risiken-und-technische-schulden)
+- [12. Glossar](#12-glossar)
+- [13. Konfiguration und Umgebungsvariablen](#13-konfiguration-und-umgebungsvariablen)
+
 ## 1. Einführung und Ziele
 
 Das Projekt "Technologie-Radar" dient als zentrales Werkzeug für die Verwaltung und Visualisierung von Technologietrends innerhalb einer Organisation. Es unterstützt Entscheidungsträger (CTO, Tech-Leads) bei der strategischen Planung und bietet Mitarbeitern eine strukturierte Übersicht über den aktuellen Technologie-Stack.
@@ -71,13 +86,15 @@ Die vollständige API-Dokumentation ist zur Laufzeit der lokalen Entwicklungsumg
 
 ## 4. Lösungsstrategie
 
-Um die wesentlichen Qualitätsziele und fachlichen Anforderungen des Technologie-Radars zu erfüllen, basiert die Architektur auf folgenden grundlegenden Lösungsansätzen:
+Um die wesentlichen Qualitätsziele und fachlichen Anforderungen des Technologie-Radars zu erfüllen, basiert die Architektur auf folgenden grundlegenden Technologieentscheidungen und Lösungsansätzen:
 
-- **TypeScript Full-Stack im Monorepo (Wartbarkeit):** Sowohl das Frontend (Angular) als auch das Backend (NestJS) werden in TypeScript entwickelt und in einem gemeinsamen Nx Monorepo verwaltet. Dies ermöglicht eine durchgängige Typensicherheit, das Teilen von Datenmodellen (z.B. DTOs und Interfaces) zwischen Client und Server sowie konsistente Build-Prozesse.
-- **Delegation von Identity & Access Management (Sicherheit):** Anstatt eine eigene Authentifizierungslösung zu implementieren, wird das Identitäts- und Zugriffsmanagement vollständig an einen externen Identity Provider (Keycloak) ausgelagert. Die Absicherung erfolgt standardisiert über OpenID Connect (OIDC) und JSON Web Tokens (JWT), um das rollenbasierte Zugriffskonzept (RBAC) sicher und wartungsarm umzusetzen.
-- **Dokumentenorientierte Persistenz (Flexibilität):** Für die Speicherung der Technologien und Audit-Logs wird MongoDB eingesetzt. Das schemafreie (bzw. schema-flexible) Design der NoSQL-Datenbank erlaubt es, zukünftige Anpassungen an den Technologie-Metadaten unkompliziert vorzunehmen, ohne komplexe Datenbankmigrationen durchführen zu müssen.
-- **Strict-Separation of Concerns (Wartbarkeit & Testbarkeit):** Das System ist strikt in Frontend (Darstellung & Nutzerinteraktion) und Backend (Geschäftslogik, Validierung, Datenhaltung) getrennt. Die Kommunikation erfolgt ausschließlich über eine dokumentierte REST-API. Dies erlaubt die isolierte Entwicklung und Skalierung der beiden Schichten.
-- **Containerisierung (Portabilität & Reproduzierbarkeit):** Das gesamte System (Frontend, Backend, Datenbanken, Keycloak) wird mittels Docker containerisiert und via Docker Compose orchestriert. Dies garantiert, dass die Anwendung in der lokalen Entwicklungsumgebung exakt so läuft wie in einem späteren produktiven Deployment.
+- **Nx Monorepo (Wartbarkeit):** Sowohl das Frontend (Angular) als auch das Backend (NestJS) werden in TypeScript entwickelt und in einem gemeinsamen Nx Monorepo verwaltet. Dies ermöglicht eine durchgängige Typensicherheit, das Teilen von Datenmodellen (z.B. DTOs und Interfaces) zwischen Client und Server sowie konsistente Build-Prozesse.
+- **NestJS & Angular (Typensicherheit):** Nutzung von TypeScript über den gesamten Stack hinweg für bessere Wartbarkeit. Für NestJS wird Jest (Backend-Tests) und für Angular Vitest (Frontend-Tests) verwendet.
+- **Delegation von Identity & Access Management (OIDC/Keycloak):** Anstatt eine eigene Authentifizierungslösung zu implementieren, wird das Identitäts- und Zugriffsmanagement vollständig an einen externen Identity Provider (Keycloak) ausgelagert. Die Absicherung erfolgt standardisiert über OpenID Connect (OIDC) und JSON Web Tokens (JWT).
+- **Dokumentenorientierte Persistenz (Flexibilität):** Für die Speicherung der Technologien und Audit-Logs wird MongoDB eingesetzt. Das schema-flexible Design erlaubt es, zukünftige Anpassungen an den Technologie-Metadaten unkompliziert vorzunehmen.
+- **Strict Separation of Concerns:** Das System ist strikt in Frontend und Backend getrennt. Die Kommunikation erfolgt ausschließlich über eine dokumentierte REST-API (Swagger).
+- **Containerisierung (Portabilität):** Das gesamte System wird mittels Docker containerisiert und via Docker Compose orchestriert.
+- **Automatisierung:** Nutzung von GitHub Actions für automatisierte Builds und Tests bei jedem Commit sowie ESLint/Prettier zur Standardisierung des Code-Styles.
 
 ---
 
@@ -274,14 +291,25 @@ graph TD
 
 ---
 
-## 9. Architekturentscheidungen
+## 9. Architekturentscheidungen (ADR)
 
-1. **Nx Monorepo:** Zur effizienten Verwaltung von Frontend und Backend in einem Repository.
-2. **NestJS & Angular:** Nutzung von TypeScript über den gesamten Stack hinweg für bessere Wartbarkeit und Typensicherheit. Für NestJS wird Jest und für Angular Vite als Testruntime verwendet.
-3. **OIDC/Keycloak:** Nutzung bewährter Standards für Sicherheit statt Eigenbau.
-4. **MongoDB:** Flexibilität bei der Beschreibung von Technologien (verschiedene Felder je nach Typ).
-5. **ESLint & Prettier:** Standardisierung der Code-Style.
-6. **GitHub Actions:** Automatisierte Builds und Tests bei jedem Commit.
+Wichtige architektonische Entscheidungen, die über die Technologieentscheidungen hinausgehen:
+
+- **Zentralisiertes Shared Library Konzept:** 
+   *   **Entscheidung:** Nutzung einer `libs`-Library im Nx Monorepo für alle gemeinsamen Typen und Interfaces.
+   *   **Begründung:** Garantiert 100%ige Übereinstimmung der Datenmodelle zwischen Frontend und Backend ("Single Source of Truth") und reduziert Redundanz.
+
+- **Deterministische Radar-Positionierung:**
+   *   **Entscheidung:** Berechnung der X/Y-Koordinaten im Frontend basierend auf einem deterministischen Seed und der Technologie-ID.
+   *   **Begründung:** Verhindert das "Springen" von Punkten bei jedem Neuladen, ohne dass komplexe Koordinaten-Sets in der Datenbank gespeichert werden müssen.
+
+- **Hybrid-Security-Architektur:**
+   *   **Entscheidung:** Kombination von OIDC im Frontend und JWT-Validierung im Backend.
+   *   **Begründung:** Ermöglicht eine nahtlose User Experience (SSO) bei gleichzeitig maximaler Sicherheit der API-Endpunkte.
+
+- **Audit-Logging via Interceptor:**
+   *   **Entscheidung:** Implementierung des Admin-Login-Audits über einen globalen NestJS Interceptor statt in der Service-Schicht.
+   *   **Begründung:** Entkoppelt die Audit-Logik von der fachlichen Geschäftslogik und stellt sicher, dass alle administrativen Zugriffe konsistent erfasst werden.
 
 ---
 
@@ -306,9 +334,9 @@ graph TD
 
 ## 11. Risiken und technische Schulden
 
-1. **Abhängigkeit von Keycloak:** Das System setzt eine laufende Keycloak-Instanz voraus. Ein Ausfall blockiert den Zugriff auf sämtliche Funktionen (außer der Home-Seite).
-2. **Client-seitige Positionsberechnung:** Die Positionen im Radar werden im Frontend berechnet. Bei extrem vielen Technologien (> 200 pro Quadrant) könnte die Performance der Initialberechnung sinken (aktuell durch deterministisches Caching und Kollisionsvermeidung optimiert).
-3. **Manuelle Datenpflege:** Es gibt aktuell keine automatisierte Synchronisation mit externen Quellen (z.B. GitHub/NPM).
+- **Abhängigkeit von Keycloak:** Das System setzt eine laufende Keycloak-Instanz voraus. Ein Ausfall blockiert den Zugriff auf sämtliche Funktionen (außer der Home-Seite).
+- **Client-seitige Positionsberechnung:** Die Positionen im Radar werden im Frontend berechnet. Bei extrem vielen Technologien (> 200 pro Quadrant) könnte die Performance der Initialberechnung sinken (aktuell durch deterministisches Caching und Kollisionsvermeidung optimiert).
+- **Manuelle Datenpflege:** Es gibt aktuell keine automatisierte Synchronisation mit externen Quellen (z.B. GitHub/NPM).
 
 ---
 
