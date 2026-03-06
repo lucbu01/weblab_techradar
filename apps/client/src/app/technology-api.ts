@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {
   CreateTechnology,
   Technology,
+  TechnologyList,
   UpdateTechnology,
   UpsertTechnologyClassification,
 } from '@techradar/libs';
@@ -20,12 +21,16 @@ export class TechnologyApi {
     name?: string,
     category?: string | string[],
     ring?: string | string[],
-  ): Observable<Technology[]> {
+    sortColumn?: string,
+    sortDirection?: string,
+  ): Observable<TechnologyList[]> {
     const params: {
       published?: boolean;
       name?: string;
       category?: string | string[];
       ring?: string | string[];
+      sortColumn?: string;
+      sortDirection?: string;
     } = {};
     if (published !== undefined && published !== null) {
       params.published = published;
@@ -38,6 +43,12 @@ export class TechnologyApi {
     }
     if (ring) {
       params.ring = ring;
+    }
+    if (sortColumn) {
+      params.sortColumn = sortColumn;
+    }
+    if (sortDirection) {
+      params.sortDirection = sortDirection;
     }
     return this.http.get<Technology[]>(this.apiUrl, { params });
   }

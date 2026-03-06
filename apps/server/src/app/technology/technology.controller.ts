@@ -12,8 +12,11 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { TechnologyService } from './technology.service';
-import { Technology } from '@techradar/libs';
+import {
+  TechnologyListProjection,
+  TechnologyService,
+} from './technology.service';
+import { TechnologyList } from '@techradar/libs';
 import { Request, Response } from 'express';
 import {
   ApiBearerAuth,
@@ -32,6 +35,8 @@ import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { UpsertTechnologyClassificationDto } from './dto/upsert-technology-classification.dto';
 import { PutTechnologyPublicationDto } from './dto/put-technology-publication.dto';
 import { TechnologyDocument } from './technology.schema';
+import { GetTechnologiesQueryDto } from './dto/get-technologies-query.dto';
+import { TechnologyListDto } from './dto/technology-list.dto';
 
 @ApiBearerAuth('keycloak')
 @ApiTags('technologies')
@@ -53,28 +58,27 @@ export class TechnologyController {
   })
   @ApiOkResponse({
     description: 'List of technologies',
-    type: TechnologyDto,
+    type: TechnologyListDto,
     isArray: true,
   })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async findTechnologies(
     @Req() req: Request,
-    @Query('name') name?: string,
-    @Query('category') category?: string | string[],
-    @Query('ring') ring?: string | string[],
-    @Query('published') published?: boolean,
-  ): Promise<Technology[]> {
+    @Query() query?: GetTechnologiesQueryDto,
+  ): Promise<TechnologyList[]> {
     const canViewUnpublished = req['user']?.roles?.some?.((r) =>
       ['CTO', 'TECHLEAD'].includes(r),
     );
     const technologies = await this.technologyService.findTechnologies(
-      name,
-      category,
-      ring,
-      canViewUnpublished ? published : true,
+      query?.name,
+      query?.category,
+      query?.ring,
+      canViewUnpublished ? query?.published : true,
+      query?.sortColumn,
+      query?.sortDirection,
     );
-    return technologies.map((t) => this.map(t));
+    return this.mapList(technologies);
   }
 
   @Get('/:id')
@@ -210,6 +214,18 @@ export class TechnologyController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async deleteTechnology(@Param('id', ParseObjectIdPipe) id: string) {
     await this.technologyService.deleteTechnology(id);
+  }
+
+  private mapList(
+    technologies: TechnologyListProjection[],
+  ): TechnologyListDto[] {
+    return technologies.map((t) => ({
+      id: t._id.toString(),
+      name: t.name,
+      published: t.published,
+      category: t.category,
+      ring: t.ring,
+    }));
   }
 
   private map(technology: TechnologyDocument): TechnologyDto {

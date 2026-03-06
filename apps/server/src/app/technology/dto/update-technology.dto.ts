@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsIn, IsNotEmpty, IsString, Matches } from 'class-validator';
-import { TechnologyCategory, UpdateTechnology } from '@techradar/libs';
-import { TECHNOLOGY_CATEGORIES } from './technology.dto';
+import {
+  TECHNOLOGY_CATEGORIES,
+  TechnologyCategory,
+  UpdateTechnology,
+} from '@techradar/libs';
 
 export class UpdateTechnologyDto implements UpdateTechnology {
   @ApiProperty({ required: true })

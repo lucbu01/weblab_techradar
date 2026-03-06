@@ -1,8 +1,8 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { TechnologyApi } from '../technology-api';
 import {
-  Technology,
   TechnologyCategory,
+  TechnologyList,
   TechnologyRing,
 } from '@techradar/libs';
 import { CommonModule } from '@angular/common';
@@ -46,7 +46,7 @@ export class Viewer implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = [];
   private dialogRef?: MatDialogRef<TechnologyDetail>;
 
-  readonly technologies = signal<Technology[]>([]);
+  readonly technologies = signal<TechnologyList[]>([]);
 
   ngOnInit() {
     this.loadTechnologies();
@@ -96,7 +96,7 @@ export class Viewer implements OnInit, OnDestroy {
     });
   }
 
-  getPoint(tech: Technology): { x: number; y: number } {
+  getPoint(tech: TechnologyList): { x: number; y: number } {
     const center = 400;
     const radius = this.getRadius(tech.ring);
     const angle = this.getAngle(tech.category, tech.id);

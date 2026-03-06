@@ -31,6 +31,18 @@ describe('Technologies', () => {
         provideHttpClient(),
         provideHttpClientTesting(),
         {
+          provide: ActivatedRoute,
+          useValue: {
+            fragment: of(null),
+          },
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate: vi.fn(),
+          },
+        },
+        {
           provide: MatDialog,
           useValue: {
             open: vi.fn().mockReturnValue({ afterClosed: () => of(true) }),
@@ -41,18 +53,6 @@ describe('Technologies', () => {
           useValue: {
             getTechnologies: vi.fn().mockReturnValue(of(mockTechnologies)),
             deleteTechnology: vi.fn().mockReturnValue(of(null)),
-          },
-        },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            fragment: of(null),
-          },
-        },
-        {
-          provide: Router,
-          useValue: {
-            navigate: vi.fn(),
           },
         },
         { provide: Auth, useValue: authMock },

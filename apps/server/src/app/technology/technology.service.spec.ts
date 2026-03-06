@@ -41,6 +41,7 @@ describe('TechnologyService', () => {
     model.findById = jest.fn().mockReturnThis();
     model.findByIdAndUpdate = jest.fn().mockReturnThis();
     model.findByIdAndDelete = jest.fn().mockReturnThis();
+    model.select = jest.fn().mockReturnThis();
     model.exec = jest.fn();
   });
 
@@ -54,6 +55,9 @@ describe('TechnologyService', () => {
       const result = await service.findTechnologies();
       expect(result).toEqual([mockTechnology]);
       expect(model.find).toHaveBeenCalled();
+      expect(model.select).toHaveBeenCalledWith(
+        '_id name published category ring',
+      );
     });
   });
 
@@ -68,6 +72,9 @@ describe('TechnologyService', () => {
       );
       expect(result).toEqual([mockTechnology]);
       expect(model.find).toHaveBeenCalledWith({ published: true });
+      expect(model.select).toHaveBeenCalledWith(
+        '_id name published category ring',
+      );
     });
   });
 

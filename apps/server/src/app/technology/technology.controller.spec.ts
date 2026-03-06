@@ -70,19 +70,15 @@ describe('TechnologyController', () => {
         Promise.resolve([mockTechnology as any]),
       );
 
-      await controller.findTechnologies(
-        {} as any,
-        undefined,
-        undefined,
-        undefined,
-        true,
-      );
+      await controller.findTechnologies({} as any, { published: true });
 
       expect(technologyService.findTechnologies).toHaveBeenCalledWith(
         undefined,
         undefined,
         undefined,
         true,
+        undefined,
+        undefined,
       );
     });
   });

@@ -1,24 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  Technology,
   TECHNOLOGY_CATEGORIES,
   TECHNOLOGY_RINGS,
   TechnologyCategory,
+  TechnologyList,
   TechnologyRing,
 } from '@techradar/libs';
 
-export class TechnologyDto implements Technology {
+export class TechnologyListDto implements TechnologyList {
   @ApiProperty({ type: 'string' })
   id: string;
-
-  @ApiProperty({ type: 'string', format: 'date-time' })
-  createdAt: string;
-
-  @ApiProperty({ type: 'string', format: 'date-time' })
-  publishedAt?: string;
-
-  @ApiProperty({ type: 'string', format: 'date-time' })
-  updatedAt: string;
 
   @ApiProperty({ type: 'string' })
   name: string;
@@ -33,10 +24,4 @@ export class TechnologyDto implements Technology {
 
   @ApiProperty({ enum: TECHNOLOGY_RINGS })
   ring?: TechnologyRing;
-
-  @ApiProperty({ type: 'string' })
-  description: string;
-
-  @ApiProperty({ type: 'string' })
-  classificationDescription?: string;
 }

@@ -6,6 +6,15 @@ export type TechnologyCategory =
 
 export type TechnologyRing = 'ADOPT' | 'TRIAL' | 'ASSESS' | 'HOLD';
 
+export const TECHNOLOGY_CATEGORIES = [
+  'TECHNIQUES',
+  'TOOLS',
+  'PLATFORMS',
+  'LANGS_FRAMEWORKS',
+] as const;
+
+export const TECHNOLOGY_RINGS = ['ADOPT', 'TRIAL', 'ASSESS', 'HOLD'] as const;
+
 export interface UpdateTechnology {
   name: string;
   category: TechnologyCategory;
@@ -23,6 +32,14 @@ export interface Technology extends CreateTechnology {
   createdAt: string;
   publishedAt?: string;
   updatedAt: string;
+}
+
+export interface TechnologyList {
+  id: string;
+  name: string;
+  published: boolean;
+  category: TechnologyCategory;
+  ring?: TechnologyRing;
 }
 
 export interface UpsertTechnologyClassification {

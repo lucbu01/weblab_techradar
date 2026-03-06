@@ -62,9 +62,15 @@
       [maxBufferPx]="1200"
       [minBufferPx]="400"
     >
-      <table mat-table [dataSource]="technologies()" class="mat-elevation-z8">
+      <table
+        mat-table
+        matSort
+        [dataSource]="technologies()"
+        (matSortChange)="sort.next($event)"
+        class="mat-elevation-z8"
+      >
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
           <td mat-cell *matCellDef="let element">
             {{element.name}} @if (!element.published) {
             <mat-chip style="margin-left: 5px" disabled>Entwurf</mat-chip>
@@ -72,7 +78,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="category">
-          <th mat-header-cell *matHeaderCellDef>Kategorie</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Kategorie</th>
           <td mat-cell *matCellDef="let element">
             <techradar-category
               [category]="element.category"
@@ -80,7 +86,9 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="ring">
-          <th mat-header-cell *matHeaderCellDef>Klassifizierung</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Klassifizierung
+          </th>
           <td mat-cell *matCellDef="let element">
             @if (element.ring) {
             <techradar-ring [ring]="element.ring"></techradar-ring>
@@ -88,7 +96,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef class="actions-cell"></th>
+          <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element" class="actions-cell">
             <button mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>more_vert</mat-icon>

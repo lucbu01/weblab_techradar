@@ -9,10 +9,11 @@ import {
 } from 'class-validator';
 import {
   CreateTechnology,
+  TECHNOLOGY_CATEGORIES,
+  TECHNOLOGY_RINGS,
   TechnologyCategory,
   TechnologyRing,
 } from '@techradar/libs';
-import { TECHNOLOGY_CATEGORIES, TECHNOLOGY_RINGS } from './technology.dto';
 
 export class CreateTechnologyDto implements CreateTechnology {
   @ApiProperty({ required: true })

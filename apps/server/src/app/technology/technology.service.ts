@@ -1,10 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Technology, TechnologyDocument } from './technology.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, QueryFilter } from 'mongoose';
+import { Model, QueryFilter, Types } from 'mongoose';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { UpsertTechnologyClassificationDto } from './dto/upsert-technology-classification.dto';
 import { PutTechnologyPublicationDto } from './dto/put-technology-publication.dto';
+import { TechnologyCategory, TechnologyRing } from '@techradar/libs';
+
+export type TechnologyListProjection = {
+  _id: Types.ObjectId;
+  name: string;
+  published: boolean;
+  category: TechnologyCategory;
+  ring?: TechnologyRing;
+};
 
 @Injectable()
 export class TechnologyService {
@@ -14,10 +23,12 @@ export class TechnologyService {
 
   async findTechnologies(
     name?: string,
-    category?: string | string[],
-    ring?: string | string[],
+    category?: string[],
+    ring?: string[],
     published?: boolean,
-  ): Promise<TechnologyDocument[]> {
+    sortColumn?: 'name' | 'category' | 'ring',
+    sortDirection?: 'asc' | 'desc',
+  ): Promise<TechnologyListProjection[]> {
     const filter: QueryFilter<TechnologyDocument> = {};
     if (published !== undefined) {
       filter.published = published;
@@ -36,7 +47,16 @@ export class TechnologyService {
     if (ring) {
       filter.ring = { $in: Array.isArray(ring) ? ring : [ring] };
     }
-    return this.technologyModel.find(filter).exec();
+    const query = this.technologyModel
+      .find(filter)
+      .select('_id name published category ring');
+    if (
+      ['name', 'category', 'ring'].includes(sortColumn) &&
+      ['asc', 'desc'].includes(sortDirection)
+    ) {
+      query.sort({ [sortColumn]: sortDirection === 'asc' ? 1 : -1 });
+    }
+    return query.exec();
   }
 
   async getTechnologyById(id: string): Promise<TechnologyDocument> {

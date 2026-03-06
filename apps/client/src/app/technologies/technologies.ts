@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatHeaderRowDef, MatTableModule } from '@angular/material/table';
-import { Technology } from '@techradar/libs';
+import { Technology, TechnologyList } from '@techradar/libs';
 import { TechnologyApi } from '../technology-api';
 import { Category } from '../chips/category';
 import { Ring } from '../chips/ring';
@@ -14,7 +14,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import type { EditMode } from '../technology-edit/technology-edit';
 import { MatChipsModule } from '@angular/material/chips';
 import { CdkFixedSizeVirtualScroll } from '@angular/cdk/scrolling';
-import { debounceTime, Subscription } from 'rxjs';
+import { debounceTime, merge, Subject, Subscription, tap } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -22,6 +22,7 @@ import { Auth } from '../auth/auth';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import type { TechnologyDetail } from '../technology-detail/technology-detail';
+import { MatSortModule, Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'techradar-technologies',
@@ -42,6 +43,7 @@ import type { TechnologyDetail } from '../technology-detail/technology-detail';
     CdkFixedSizeVirtualScroll,
     MatButtonModule,
     RouterLink,
+    MatSortModule,
   ],
   templateUrl: './technologies.html',
   styleUrl: './technologies.scss',
@@ -62,8 +64,10 @@ export class Technologies implements OnInit, OnDestroy {
     ring: [],
     published: ['all'],
   });
+  protected readonly sort = new Subject<Sort>();
+  private currentSort: Sort = { active: '', direction: '' };
 
-  protected readonly technologies = signal<Technology[]>([]);
+  protected readonly technologies = signal<TechnologyList[]>([]);
   protected readonly user = toSignal(this.auth.getUserInfo());
   protected readonly filter = signal(true);
 
@@ -76,10 +80,13 @@ export class Technologies implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadTechnologies();
-    this.searchForm.valueChanges
-      .pipe(debounceTime(300))
-      .subscribe(() => this.loadTechnologies());
     this.subscriptions.push(
+      merge(
+        this.sort.pipe(tap((sort) => (this.currentSort = sort))),
+        this.searchForm.valueChanges,
+      )
+        .pipe(debounceTime(300))
+        .subscribe(() => this.loadTechnologies()),
       this.activatedRoute.fragment.subscribe(async (id) => {
         if (this.dialogRef) {
           this.dialogRef.close();
@@ -112,6 +119,10 @@ export class Technologies implements OnInit, OnDestroy {
         search.name?.trim() === '' ? undefined : search.name?.trim(),
         search.category as unknown as string[],
         search.ring as unknown as string[],
+        this.currentSort.direction !== '' ? this.currentSort.active : undefined,
+        this.currentSort.direction !== ''
+          ? this.currentSort.direction
+          : undefined,
       )
       .subscribe((techs) => {
         this.technologies.set(techs);

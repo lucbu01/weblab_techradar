@@ -10,7 +10,7 @@ import {
   UpdateTechnology,
 } from '@techradar/libs';
 
-describe('TechnologyService', () => {
+describe('TechnologyApi', () => {
   let service: TechnologyApi;
   let httpMock: HttpTestingController;
   const apiUrl = '/api/technologies';
