@@ -42,12 +42,11 @@ docker compose --profile app up
 
 ### NestJS Server mit Angular-Client
 
-Um den NestJS Server (Port 3000) im Produktivmodus (mit integriertem Client) zu starten (Docker Compose muss laufen), benutze:
+Um den NestJS Server (Port 3000) im Produktivmodus (mit integriertem Client) zu starten (Docker Compose muss laufen), benutze in der Kommandozeile:
 
 ```sh
 npm run start:prod
 ```
-
 http://localhost:3000/
 
 ### NestJS Development-Server

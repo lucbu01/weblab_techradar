@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npx nx run-many --target=serve --projects=client,server --parallel=2",
-    "start:prod": "npm run build && cp apps/server/.env dist/apps/server/ && cd dist/apps/server && node main.js",
+    "start:prod": "npm run build && node dist/apps/server/main.js",
     "start:client": "nx serve client",
     "start:server": "nx serve server",
     "build": "nx run-many --target=build --projects=client,server --tuiAutoExit=true",
@@ -15,6 +15,7 @@
     "lint:client": "nx lint client",
     "lint:server": "nx lint server",
     "lint:shared-types": "nx lint libs",
+    "copy-env": "copyfiles -f .env dist/apps/server/.env",
     "nx": "nx",
     "ng": "ng",
     "nest": "nest"
@@ -75,6 +76,7 @@
     "@types/node": "25.3.3",
     "@typescript-eslint/utils": "^8.56.1",
     "angular-eslint": "^21.2.0",
+    "copyfiles": "^2.4.1",
     "cypress": "^15.11.0",
     "eslint": "^9.39.3",
     "eslint-config-prettier": "^10.1.8",
