@@ -1,3 +1,17 @@
+<div align="center">
+  <img alt="WEBLAB Projekt Technologie-Radar von Luca Bucher" src="https://raw.githubusercontent.com/lucbu01/weblab_techradar/refs/heads/main/apps/client/public/favicon.svg" width="200">
+</div>
+
+---
+
+<div align="center">
+  <a href="https://github.com/lucbu01/weblab_techradar/actions/workflows/build.yml">
+    <img alt="CI" src="https://github.com/lucbu01/weblab_techradar/actions/workflows/build.yml/badge.svg">
+  </a>
+</div>
+
+---
+
 # WEBLAB Projekt Technologie-Radar
 
 Projekt im Modul WEBLAB an der HSLU.
@@ -11,13 +25,22 @@ Autor: Luca Bucher
 - [Web Programming Lab Projektauftrag](https://github.com/web-programming-lab/web-programming-lab-projekt/blob/main/README.md)
 - [Beschrieb Technologie-Radar](https://github.com/web-programming-lab/web-programming-lab-projekt/blob/main/Technologie-Radar.md)
 
+## Installation
+
+1. NodeJS (LTS-Version 24.X) muss installiert sein.
+2. Docker muss installiert sein.
+3. Packages müssen intalliert sein (`npm install` im Root-Verzeichnis des Projekts).
+
 ## Tasks ausführen
 
+### Infrastruktur (Docker Compose)
 Um die benötigte Infrastruktur (Datenbank / Keycloak) zu starten (Docker muss installiert sein und laufen), benutze:
 
 ```sh
 docker compose --profile app up
 ```
+
+### NestJS Server mit Angular-Client
 
 Um den NestJS Server (Port 3000) im Produktivmodus (mit integriertem Client) zu starten (Docker Compose muss laufen), benutze:
 
@@ -25,6 +48,9 @@ Um den NestJS Server (Port 3000) im Produktivmodus (mit integriertem Client) zu 
 npm run start:prod
 ```
 
+http://localhost:3000/
+
+### NestJS Development-Server
 
 Um den NestJS Dev-Server (Server / Port 3000) zu starten (Docker Compose muss laufen), benutze:
 
@@ -32,11 +58,18 @@ Um den NestJS Dev-Server (Server / Port 3000) zu starten (Docker Compose muss la
 npm run start:server
 ```
 
+http://localhost:3000/api/docs
+
+### Angular Development-Server
+
 Um den Angular Dev-Server (Client / Port 4200) zu starten (Server muss laufen), benutze:
 
 ```sh
 npm run start:client
 ```
+
+http://localhost:4200/
+### Linting
 
 Um das ganze Projekt zu linten, benutze:
 
@@ -44,17 +77,25 @@ Um das ganze Projekt zu linten, benutze:
 npm run lint
 ```
 
+### Testing
+
 Um die Unit-Tests für das ganze Projekt auszuführen, benutze:
 
 ```sh
 npm test
 ```
 
+### Build
+
 Um ein Bundle für die Produktion zu erstellen, benutze:
 
 ```sh
 npm run build
+cd dist/apps/server
+npm ci
 ```
+
+### Nützliche Nx-Tasks
 
 Um alle verfügbaren Tasks für ein Projekt zu sehen, benutze:
 
