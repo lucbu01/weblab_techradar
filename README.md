@@ -24,6 +24,7 @@ Autor: Luca Bucher
 - [Fazit und Reflexion](./Reflexion.md)
 - [Web Programming Lab Projektauftrag](https://github.com/web-programming-lab/web-programming-lab-projekt/blob/main/README.md)
 - [Beschrieb Technologie-Radar](https://github.com/web-programming-lab/web-programming-lab-projekt/blob/main/Technologie-Radar.md)
+- [Live-Demo](http://techradar.lucbu.ch)
 
 ## Installation
 
@@ -46,7 +47,13 @@ Folgende User sind für den lokalen Keycloak aufgesetzt:
   - Passwort: employee
   - Rolle: EMPLOYEE
 
-Das System kann auf live auf [techradar.lucbu.ch](https://techradar.lucbu.ch) ausprobiert werden. Die entsprechenden Credentials sind im Abgabe-File auf Ilias.
+Das System kann auf live auf [techradar.lucbu.ch](https://techradar.lucbu.ch) ausprobiert werden.
+Die entsprechenden Credentials für die Admin-User sind im Abgabe-File auf Ilias.
+Auf dem System ist folgender Read-Only User vorhanden:
+- Mitarbeiter
+  - Username: employee
+  - Passwort: w793KLXmwqNs
+  - Rolle: EMPLOYEE
 
 ## Tasks ausführen
 
