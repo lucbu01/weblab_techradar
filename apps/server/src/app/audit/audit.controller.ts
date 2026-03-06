@@ -8,7 +8,7 @@ import {
 } from '@nestjs/swagger';
 import { Auth } from '../auth/auth.decorator';
 import { AuditService } from './audit.service';
-import { AdminLoginAudit } from './admin-login-audit.schema';
+import { AdminLoginAuditDto } from './dto/audit.dto';
 
 @ApiBearerAuth('keycloak')
 @ApiTags('audit')
@@ -22,13 +22,22 @@ export class AuditController {
   })
   @ApiOkResponse({
     description: 'List of audit entries',
-    type: [AdminLoginAudit],
+    type: [AdminLoginAuditDto],
   })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth('CTO')
   @Get()
-  async findAll(): Promise<AdminLoginAudit[]> {
-    return this.auditService.findAll();
+  async findAll(): Promise<AdminLoginAuditDto[]> {
+    const audits = await this.auditService.findAll();
+    return audits.map((a) => ({
+      sub: a.sub,
+      iat: a.iat,
+      roles: a.roles,
+      username: a.username,
+      ip: a.ip,
+      userAgent: a.userAgent,
+      createdAt: a.createdAt?.toISOString(),
+    }));
   }
 }
