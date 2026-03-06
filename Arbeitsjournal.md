@@ -100,4 +100,4 @@ Technologien können nun auch im Frontend erstellt und bearbetet weren. Ausserde
 Die App wurde optimiert mit responive Design und Fehlerhandling. Die Rolle Mitarbeiter (`EMPLOYEE`) kann jezt die Technologien auch tabellarisch ansehen. Die Tests wurden erweitert und die Dokumentation initialisiert.
 
 ## Zusammenfassung
-Aufwand insgesamt: 47h
+Aufwand insgesamt: 54h
